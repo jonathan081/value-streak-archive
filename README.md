@@ -40,5 +40,5 @@ They will then be presented with a picture of the game and data indicating the p
 ### Mock-Ups
 ![Landing page](/wireframe/Landing_Page.png "Landing Page")
 ![Search results](/wireframe/Search_Result.png "search results")
-![Price History] (/wireframe/Search_Result_-_History_Diagram.png "Price History")
+![Price History](/wireframe/Search_Result-History_Diagram.png "Price History")
 ![About page](/wireframe/About_new.png "about")
