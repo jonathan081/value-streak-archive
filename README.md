@@ -42,3 +42,8 @@ They will then be presented with a picture of the game and data indicating the p
 ![Search results](/wireframe/Search_Result.png "search results")
 ![Price History](/wireframe/Search_Result_-_History_Diagram.png "Price History")
 ![About page](/wireframe/About_new.png "about")
+
+### Comments by Ming
+* For some reason, I feel way too excited about this project. YES!
+* This is actually a real problem. I bought Legend of Zelda: Link to the Past a few years ago and I think I overpaid for it apparently.  It sucks when Nintendo had to release SNES Classic which tanked the price of a games.
+* I usually don't do this but here's a real kickass feature: inventory of your games, keep track of the worth of your library
