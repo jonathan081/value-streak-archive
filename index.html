@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <title>ValueStreak</title>
+    <link rel="stylesheet" href="style.css"/>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div class="logo"></div>
+
+    <div class="search">
+        <input type="text" id="searchBar" placeholder="Enter the name of a game to search for." />
+        <button onclick="search()" id="searchButton">Search</button>
+    </div>
+
+    <div id="results">
+    </div>
+
+    <script>
+        var searchBar = document.getElementById("searchBar");
+        var gameName = "";
+        var results = document.getElementById("results");
+
+        function search() {
+            gameName = searchBar.value;
+            results.innerHTML = "<p>You searched for " + gameName + ".</p>";
+        }
+    </script>
+
+</body>
+
+</html>
