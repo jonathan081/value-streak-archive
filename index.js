@@ -11,35 +11,29 @@ function search() {
     results.innerHTML = "<p>Searched for " + gameName + ".</p>";
 }
 
-function fetch() {
-	// get JSON from ebay
-	// https://developer.ebay.com/devzone/finding/CallRef/findCompletedItems.html
 
-	request.open("POST", "http://svcs.ebay.com/services/search/FindingService/v1", true);
-	request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	request.onreadystatechange = function() {
-        if (request.readyState == 4 && request.status == 200) {
-            data = JSON.parse(request.responseText);
-            console.log(data);
-        }
-        else if (request.readyState == 4 && request.status != 200) {
-        	console.log(request.responseText);
-            alert("Server responded with a bad status code!")
-        }
-	};
-    request.send("OPERATION-NAME=findCompletedItems&" + 
-   	             	"SERVICE-VERSION=1.7.0&" +
-   			     	"SECURITY-APPNAME=YourAppID&" + 
-					"RESPONSE-DATA-FORMAT=XML&" +
-					"REST-PAYLOAD&"+
-					"keywords=Garmin+nuvi+1300+Automotive+GPS+Receiver&"+
-					"categoryId=156955&"+
-					"itemFilter(0).name=Condition&"+
-					"itemFilter(0).value=3000&"+
-					"itemFilter(1).name=FreeShippingOnly&"+
-					"itemFilter(1).value=true&"+
-					"itemFilter(2).name=SoldItemsOnly&"+
-					"itemFilter(2).value=true&"+
-					"sortOrder=PricePlusShippingLowest&"+
-					"paginationInput.entriesPerPage=2");
+
+//https://developer.ebay.com/devzone/finding/CallRef/findCompletedItems.html
+
+// request URL
+var url = "http://svcs.ebay.com/services/search/FindingService/v1" + "?";
+
+// filters
+url += "OPERATION-NAME=findCompletedItems";
+url += "&SERVICE-VERSION=1.13.0";
+url += "&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD";
+url += "&keywords=Garmin+nuvi+1300+Automotive+GPS+Receiver";
+url += "&categoryId=156955&itemFilter(0).name=Condition&itemFilter(0).value=3000&itemFilter(1).name=FreeShippingOnly&itemFilter(1).value=true&itemFilter(2).name=SoldItemsOnly&itemFilter(2).value=true&sortOrder=PricePlusShippingLowest&paginationInput.entriesPerPage=2";
+
+// ebay access key
+url += "&SECURITY-APPNAME=ZiyuSong-ValueStr-PRD-279703086-b2b1a6a0";
+
+// callback function name
+url += "&callback=fetch";
+function fetch(data) {
+    console.log(data);
 }
+
+s = document.createElement('script'); // create script element
+s.src= url;
+document.body.appendChild(s);
