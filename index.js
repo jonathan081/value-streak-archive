@@ -9,7 +9,7 @@ var returned_items;
 
 function search() {
     gameName = searchBar.value;
-    results.innerHTML = "<p>You searched for " + gameName + ".</p>";
+    results.innerHTML = "<p>Searching ebay for " + gameName + "...</p>";
     keywords = gameName.replace(" ", "+");
     url += "&keywords=" + keywords;
 
@@ -72,7 +72,7 @@ function process(items) {
     var total = 0.0;
     for(var i = 0; i < items.length; i++) {
         var price = parseFloat(items[i].sellingStatus[0].convertedCurrentPrice[0].__value__);
-        var date  = items[i].listingInfo[0].endTime[0];
+        var date  = new Date(items[i].listingInfo[0].endTime[0]);
         if(price < minPrice) {
             minPrice = price;
             minPriceDate = date;
@@ -84,7 +84,8 @@ function process(items) {
         total += price;
     }
     averagePrice = total / items.length;
-    results.innerHTML += '<p>The best price was: $' + minPrice + ' on ' + minPriceDate + '.</p>';
-    results.innerHTML += '<p>The highest price was: $' + maxPrice + ' on ' + maxPriceDate + '.</p>';
+    results.innerHTML = '<h3>ebay sales for ' + gameName + ':</h3>';
+    results.innerHTML += '<p>The best price was: $' + minPrice + ' on ' + minPriceDate.toString() + '.</p>';
+    results.innerHTML += '<p>The highest price was: $' + maxPrice + ' on ' + maxPriceDate.toString() + '.</p>';
     results.innerHTML += '<p>The average price was: $' + averagePrice.toFixed(2) + '.</p>';
 }
