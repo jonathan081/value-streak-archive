@@ -9,7 +9,7 @@ var returned_items;
 
 function search() {
     gameName = searchBar.value;
-    results.innerHTML = "<p>Searched for " + gameName + ".</p>";
+    results.innerHTML = "<p>You searched for " + gameName + ".</p>";
     keywords = gameName.replace(" ", "+");
     url += "&keywords=" + keywords;
 
@@ -49,6 +49,37 @@ url += "&SECURITY-APPNAME=ZiyuSong-ValueStr-PRD-279703086-b2b1a6a0";
 url += "&callback=fetch";
 function fetch(data) {
 	returned_items = data.findCompletedItemsResponse[0].searchResult[0].item;
+    process(returned_items);
 	console.log(returned_items);
 }
 
+////////////////////////////////////////////////////////////////////////////
+///////////////////////  Response parsing  /////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+var minPrice = 1000.0;
+var minPriceDate = "";
+var maxPrice = 0.0;
+var maxPriceDate = "";
+var averagePrice = 0.0;
+
+function process(items) {
+    var total = 0.0;
+    for(var i = 0; i < items.length; i++) {
+        var price = parseFloat(items[i].sellingStatus[0].convertedCurrentPrice[0].__value__);
+        var date  = items[i].listingInfo[0].endTime[0];
+        if(price < minPrice) {
+            minPrice = price;
+            minPriceDate = date;
+        }
+        if(price > maxPrice) {
+            maxPrice = price;
+            maxPriceDate = date;
+        }
+        total += price;
+    }
+    averagePrice = total / items.length;
+    results.innerHTML += '<p>The best price was: $' + minPrice + ' on ' + minPriceDate + '.</p>';
+    results.innerHTML += '<p>The highest price was: $' + maxPrice + ' on ' + maxPriceDate + '.</p>';
+    results.innerHTML += '<p>The average price was: $' + averagePrice.toFixed(2) + '.</p>';
+}
