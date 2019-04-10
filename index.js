@@ -57,13 +57,18 @@ function fetch(data) {
 ///////////////////////  Response parsing  /////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 
-var minPrice = 1000.0;
-var minPriceDate = "";
-var maxPrice = 0.0;
-var maxPriceDate = "";
-var averagePrice = 0.0;
+var minPrice;
+var minPriceDate;
+var maxPrice;
+var maxPriceDate;
+var averagePrice;
 
 function process(items) {
+    minPrice = 1000.0;
+    minPriceDate = "";
+    maxPrice = 0.0;
+    maxPriceDate = "";
+    averagePrice = 0.0;
     var total = 0.0;
     for(var i = 0; i < items.length; i++) {
         var price = parseFloat(items[i].sellingStatus[0].convertedCurrentPrice[0].__value__);
