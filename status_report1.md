@@ -20,3 +20,6 @@ MongoDB component of site so we can send basic JSON data to store and pull from 
 of the week. We also want to start utlizing the eBay data by implementing it into content
 the user can view. Hopefully we can start logging the data on a graph or showing the lowest
 price for a search query.
+
+# Comments by Ming
+* Huge win getting eBay API to work.  Now to you prob need to create a server side to use eBay API because I don't think eBay API enables CORS.  Have you seen https://www.npmjs.com/package/ebay
