@@ -48,9 +48,13 @@ url += "&SECURITY-APPNAME=ZiyuSong-ValueStr-PRD-279703086-b2b1a6a0";
 // callback function name
 url += "&callback=fetch";
 function fetch(data) {
-	returned_items = data.findCompletedItemsResponse[0].searchResult[0].item;
-    process(returned_items);
-	console.log(returned_items);
+    // check for valid response data
+    if (data.findCompletedItemsResponse[0].searchResult[0].item != undefined) {
+	    returned_items = data.findCompletedItemsResponse[0].searchResult[0].item;
+        process(returned_items);
+	    console.log(returned_items);
+    }
+    else results.innerHTML = '<h3>Sorry, no items matched your search.</h3>';
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -64,28 +68,44 @@ var maxPriceDate;
 var averagePrice;
 
 function process(items) {
+    // initialize price range variables
     minPrice = 1000.0;
     minPriceDate = "";
     maxPrice = 0.0;
     maxPriceDate = "";
     averagePrice = 0.0;
     var total = 0.0;
-    for(var i = 0; i < items.length; i++) {
-        var price = parseFloat(items[i].sellingStatus[0].convertedCurrentPrice[0].__value__);
-        var date  = new Date(items[i].listingInfo[0].endTime[0]);
-        if(price < minPrice) {
-            minPrice = price;
-            minPriceDate = date;
+    var maxTitle = "";
+    var minTitle = "";
+
+    // doublecheck for valid response data
+    if(items != undefined) {
+        if(items.length != 0) {
+            for(var i = 0; i < items.length; i++) {
+                var price = parseFloat(items[i].sellingStatus[0].convertedCurrentPrice[0].__value__);
+                if(price < minPrice) {
+                    minPrice = price;
+                    minPriceDate = new Date(items[i].listingInfo[0].endTime[0]);
+                    minTitle = items[i].title[0];
+                }
+                if(price > maxPrice) {
+                    maxPrice = price;
+                    maxPriceDate = new Date(items[i].listingInfo[0].endTime[0]);
+                    maxTitle = items[i].title[0];
+                }
+                total += price;
+            }
+            averagePrice = total / items.length;
+            results.innerHTML = '<h3>ebay sales for ' + gameName + ':</h3>';
+            results.innerHTML += '<p>The lowest price was: $' + minPrice.toFixed(2)
+                                 + '<br>for "' + minTitle
+                                 + '"<br>on ' + minPriceDate.toString() + '.</p>';
+            results.innerHTML += '<p>The highest price was: $' + maxPrice.toFixed(2)
+                                 + '<br>for "' + maxTitle
+                                 + '"<br>on ' + maxPriceDate.toString() + '.</p>';
+            results.innerHTML += '<p>The average price was: $' + averagePrice.toFixed(2) + '.</p>';
         }
-        if(price > maxPrice) {
-            maxPrice = price;
-            maxPriceDate = date;
-        }
-        total += price;
+        else results.innerHTML = '<h3>Sorry, no items matched your search.</h3>';
     }
-    averagePrice = total / items.length;
-    results.innerHTML = '<h3>ebay sales for ' + gameName + ':</h3>';
-    results.innerHTML += '<p>The best price was: $' + minPrice + ' on ' + minPriceDate.toString() + '.</p>';
-    results.innerHTML += '<p>The highest price was: $' + maxPrice + ' on ' + maxPriceDate.toString() + '.</p>';
-    results.innerHTML += '<p>The average price was: $' + averagePrice.toFixed(2) + '.</p>';
+    else results.innerHTML = '<h3>Sorry, no items matched your search.</h3>';
 }
