@@ -24,7 +24,7 @@ url += "&sortOrder=BestMatch";
 // ebay access key
 url += "&SECURITY-APPNAME=ZiyuSong-ValueStr-PRD-279703086-b2b1a6a0";
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 3000;
 const https = require('https');
 
 app.use(function(req, res, next) {
@@ -44,4 +44,4 @@ app.post('/search', function(req, res){
     res.send({"error" : "Something is wrong with the data"});   
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(PORT);
