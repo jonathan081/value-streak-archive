@@ -26,8 +26,7 @@ function requestData() {
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200){
-            data = JSON.parse(request.responseText);
-            console.log(data);
+            console.log(request.responseText);
         }
     }
     request.send(param);

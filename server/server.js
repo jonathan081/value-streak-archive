@@ -37,7 +37,6 @@ app.post('/search', function(req, res){
   if (req.body.hasOwnProperty('keywords')) {
     url += "&keywords=" + req.body.keywords;
     https.get(url, function(httpRes){
-      console.log(httpRes);
       res.send(httpRes);
     })
   } else 
