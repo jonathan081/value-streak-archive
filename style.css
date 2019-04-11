@@ -8,6 +8,7 @@ body {
 }
 
 div.search input {
+    font-family: "Arial Black", Gadget, sans-serif;
     padding: 10px;
     font-size: 14px;
     border: 1px solid black;
@@ -15,7 +16,18 @@ div.search input {
     background: white;
 }
 
+div.search select {
+    font-family: "Arial Black", Gadget, sans-serif;
+    padding: 10px;
+    font-size: 14px;
+    color: white;
+    background: black;
+    border: 1px solid black;
+    width: 15%;
+}
+
 div.search button {
+    font-family: "Arial Black", Gadget, sans-serif;
     padding: 10px;
     font-size: 14px;
     color: white;

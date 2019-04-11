@@ -3,14 +3,18 @@
 var request = new XMLHttpRequest();
 var searchBar = document.getElementById("searchBar");
 var gameName = "";
+var plat = "";
 var results = document.getElementById("results");
+var platform = document.getElementById('platform');
 var returned_data;
 var returned_items;
 
 function search() {
     gameName = searchBar.value;
-    results.innerHTML = "<p>Searching ebay for " + gameName + "...</p>";
-    keywords = gameName.replace(" ", "+");
+    plat = platform.options[platform.selectedIndex].value;
+    if(plat != '') plat = '+' + plat;
+    results.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
+    keywords = gameName.replace(" ", "+") + plat;
     url += "&keywords=" + keywords;
 
 	//create script element
@@ -96,7 +100,7 @@ function process(items) {
                 total += price;
             }
             averagePrice = total / items.length;
-            results.innerHTML = '<h3>ebay sales for ' + gameName + ':</h3>';
+            results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
             results.innerHTML += '<p>The lowest price was: $' + minPrice.toFixed(2)
                                  + '<br>for "' + minTitle
                                  + '"<br>on ' + minPriceDate.toString() + '.</p>';
