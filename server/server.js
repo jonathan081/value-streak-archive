@@ -6,7 +6,7 @@ const path = require('path');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-var url = "https://svcs.ebay.com/services/search/FindingService/v1";
+var url = "http://svcs.ebay.com/services/search/FindingService/v1";
 url += "?OPERATION-NAME=findCompletedItems";
 url += "&SERVICE-VERSION=1.13.0";
 url += "&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD";
@@ -25,7 +25,7 @@ url += "&sortOrder=BestMatch";
 url += "&SECURITY-APPNAME=ZiyuSong-ValueStr-PRD-279703086-b2b1a6a0";
 
 const PORT = process.env.PORT || 3000;
-const https = require('https');
+const http = require('http');
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -36,8 +36,15 @@ app.use(function(req, res, next) {
 app.post('/search', function(req, res){
   if (req.body.hasOwnProperty('keywords')) {
     url += "&keywords=" + req.body.keywords;
-    https.get(url, function(httpRes){
-      res.send({"findCompletedItemsResponse" : httpRes.findCompletedItemsResponse});
+    http.get(url, function(httpRes){
+      var body = '';
+      httpRes.on('data', function(d){
+        body += d;
+      });
+      httpRes.on('end', function(){
+        var parsed = JSON.parse(body);
+        res.send(parsed);
+      })
     })
   } else 
     res.send({"error" : "Something is wrong with the data"});   
