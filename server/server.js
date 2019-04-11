@@ -48,3 +48,5 @@ app.post('/search', function(req, res){
   } else 
     res.send({"error" : "Something is wrong with the data"});   
 });
+
+app.listen(process.env.PORT || 3000);
