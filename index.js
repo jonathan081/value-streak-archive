@@ -8,6 +8,9 @@ var results = document.getElementById("results");
 var platform = document.getElementById('platform');
 var returned_data;
 var returned_items;
+var server = "https://valuestack-server.herokuapp.com/search";
+var param = "keywords=";
+var data;
 
 function search() {
     gameName = searchBar.value;
@@ -15,43 +18,23 @@ function search() {
     if(plat != '') plat = '+' + plat;
     results.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
     keywords = gameName.replace(" ", "+") + plat;
-    url += "&keywords=" + keywords;
-
-	//create script element
- 	s = document.createElement('script'); 
- 	s.src = url;
-	document.body.appendChild(s);
+    param +=keywords;
+    requestData();
 }
 
+function requestData() {
+    request.open('Post', server, true);
+    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200){
+            data = JSON.parse(request.responseText);
+            check(data);
+        }
+    }
+    request.send(param);
+}
 
-////////////////////////////////////////////////////////////////////////////
-///////////////////////  eBay API Search Filters ///////////////////////////
-////////////////////////////////////////////////////////////////////////////
-
-//https://developer.ebay.com/devzone/finding/CallRef/findCompletedItems.html
-
-// request URL
-var url = "http://svcs.ebay.com/services/search/FindingService/v1";
-url += "?OPERATION-NAME=findCompletedItems";
-url += "&SERVICE-VERSION=1.13.0";
-url += "&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD";
-
-// video games category id : 139973
-url += "&categoryId=139973";
-
-// item filers
-url += "&itemFilter(0).name=FreeShippingOnly&itemFilter(0).value=true&itemFilter(1).name=SoldItemsOnly&itemFilter(1).value=true";
-url += "&itemFilter(2).name=TopRatedSellerOnly&itemFilter(2).value=true";
-// sort order
-
-url += "&sortOrder=BestMatch";
-
-// ebay access key
-url += "&SECURITY-APPNAME=ZiyuSong-ValueStr-PRD-279703086-b2b1a6a0";
-
-// callback function name
-url += "&callback=fetch";
-function fetch(data) {
+function check(data) {
     // check for valid response data
     if (data.findCompletedItemsResponse[0].searchResult[0].item != undefined) {
 	    returned_items = data.findCompletedItemsResponse[0].searchResult[0].item;
