@@ -6,8 +6,6 @@ const path = require('path');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-var request = new XMLHttpRequest();
-
 var url = "http://svcs.ebay.com/services/search/FindingService/v1";
 url += "?OPERATION-NAME=findCompletedItems";
 url += "&SERVICE-VERSION=1.13.0";
@@ -26,11 +24,8 @@ url += "&sortOrder=BestMatch";
 // ebay access key
 url += "&SECURITY-APPNAME=ZiyuSong-ValueStr-PRD-279703086-b2b1a6a0";
 
-// callback function name
-url += "&callback=fetch";
-
 const PORT = process.env.PORT || 5000
-const https = require('https');
+const http = require('http');
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -40,8 +35,8 @@ app.use(function(req, res, next) {
 
 app.post('/search', function(req, res){
   if (req.body.hasOwnProperty('keywords')) {
-    url += "&keywords=" + keywords;
-    https.get(url, function(httpRes){
+    url += "&keywords=" + req.body.keywords;
+    http.get(url, function(httpRes){
       console.log(httpRes);
       res.send(httpRes);
     })
