@@ -37,7 +37,7 @@ app.post('/search', function(req, res){
   if (req.body.hasOwnProperty('keywords')) {
     url += "&keywords=" + req.body.keywords;
     https.get(url, function(httpRes){
-      res.send(httpRes);
+      res.send({"findCompletedItemsResponse" : httpRes.findCompletedItemsResponse});
     })
   } else 
     res.send({"error" : "Something is wrong with the data"});   
