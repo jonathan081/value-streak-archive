@@ -1,10 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser');
-var validator = require ('validator');
-var app = express();
+const validator = require ('validator');
+const http = require('http');
 const path = require('path');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+const PORT = process.env.PORT || 3000;
+
+const app = express();
+var eBayData = "";
 
 var url = "http://svcs.ebay.com/services/search/FindingService/v1";
 url += "?OPERATION-NAME=findCompletedItems";
@@ -24,25 +26,25 @@ url += "&sortOrder=BestMatch";
 // ebay access key
 url += "&SECURITY-APPNAME=ZiyuSong-ValueStr-PRD-279703086-b2b1a6a0";
 
-const PORT = process.env.PORT || 3000;
-const http = require('http');
 
-app.use(function(req, res, next) {
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 })
 
-app.post('/search', function(req, res){
+app.post('/search', (req, res) => {
   if (req.body.hasOwnProperty('keywords')) {
     url += "&keywords=" + req.body.keywords;
-    http.get(url, function(httpRes){
-      var body = '';
+    http.get(url, (httpRes) => {
       httpRes.on('data', function(d){
-        body += d;
+        eBayData += d;
       });
-      httpRes.on('end', function(){
-        var parsed = JSON.parse(body);
+      httpRes.on('end', () => {
+        var parsed = JSON.parse(eBayData);
         res.send(parsed);
       })
     })
@@ -50,4 +52,8 @@ app.post('/search', function(req, res){
     res.send({"error" : "Something is wrong with the data"});   
 });
 
-app.listen(PORT);
+app.listen(PORT, (err)=> console.log("Listening on port " + PORT));
+
+
+
+
