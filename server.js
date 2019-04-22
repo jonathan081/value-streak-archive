@@ -71,7 +71,8 @@ app.post('/search', (req, res) => {
               minPrice = price;
               minPriceDate = date;
               minTitle = parsed[i].title[0];
-              minImage = parsed[i].galleryURL[0];
+              if(parsed[i].hasOwnProperty('galleryURL'))
+                minImage = parsed[i].galleryURL[0];
             }
             if(price > maxPrice) {
               maxPrice = price;
