@@ -29,11 +29,11 @@ url += "&SECURITY-APPNAME=ZiyuSong-ValueStr-PRD-279703086-b2b1a6a0";
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-//app.use((req, res, next) => {
-//  res.header("Access-Control-Allow-Origin", "*");
-//  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//  next();
-//})
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://value-streak.herokuapp.com");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+})
 
 app.post('/search', (req, res) => {
   var eBayData = "";
@@ -102,5 +102,12 @@ app.post('/search', (req, res) => {
 });
 
 app.use(express.static("public"));
+app.use((req, res, next) => {
+    if(req.header('x-forwarded-proto') !== 'https') {
+        res.redirect(`https://${req.header('host')}${req.url}`);
+    } else {
+        next();
+    }
+})
 
 app.listen(PORT, (err)=> console.log("Listening on port " + PORT));
