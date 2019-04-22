@@ -101,13 +101,13 @@ app.post('/search', (req, res) => {
     res.send({"error" : "Something is wrong with the data"});
 });
 
-app.use(express.static("public"));
 app.use((req, res, next) => {
     if(req.header('x-forwarded-proto') !== 'https') {
         res.redirect(`https://${req.header('host')}${req.url}`);
     } else {
         next();
     }
-})
+});
+app.use(express.static("public"));
 
 app.listen(PORT, (err)=> console.log("Listening on port " + PORT));
