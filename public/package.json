@@ -3,10 +3,11 @@
   "version": "0.0.1",
   "main": "index.js",
   "dependencies": {
-    "path": "latest",
     "body-parser": "latest",
+    "express": "latest",
     "mongodb": "^2.2.33",
-    "express": "latest"
+    "path": "latest",
+    "validator": "^10.11.0"
   },
   "repository": {
     "type": "git",

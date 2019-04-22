@@ -29,11 +29,11 @@ url += "&SECURITY-APPNAME=ZiyuSong-ValueStr-PRD-279703086-b2b1a6a0";
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-})
+//app.use((req, res, next) => {
+//  res.header("Access-Control-Allow-Origin", "*");
+//  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//  next();
+//})
 
 app.post('/search', (req, res) => {
   var eBayData = "";
@@ -47,6 +47,7 @@ app.post('/search', (req, res) => {
   var maxTitle = "";
   var minTitle = "";
   var minImage = "";
+  var prices = [];
   if (req.body.hasOwnProperty('keywords')) {
     var key = validator.escape(req.body.keywords);
     url += "&keywords=" + key;
@@ -60,15 +61,20 @@ app.post('/search', (req, res) => {
           parsed = parsed.findCompletedItemsResponse[0].searchResult[0].item;
           for(var i = 0; i < parsed.length; i++) {
             var price = parseFloat(parsed[i].sellingStatus[0].convertedCurrentPrice[0].__value__);
+            var date = new Date(parsed[i].listingInfo[0].endTime[0]);
+            prices[i] = {
+                "price": price,
+                "date": date,
+            };
             if(price < minPrice) {
               minPrice = price;
-              minPriceDate = new Date(parsed[i].listingInfo[0].endTime[0]);
+              minPriceDate = date;
               minTitle = parsed[i].title[0];
               minImage = parsed[i].galleryURL[0];
             }
             if(price > maxPrice) {
               maxPrice = price;
-              maxPriceDate = new Date(parsed[i].listingInfo[0].endTime[0]);
+              maxPriceDate = date;
               maxTitle = parsed[i].title[0];
             }
             total += price;
@@ -84,6 +90,7 @@ app.post('/search', (req, res) => {
             "maxTitle": maxTitle,
             "averagePrice": averagePrice,
             "minImage": minImage,
+            "prices": prices,
           };
           res.send(toSend);
         } else
