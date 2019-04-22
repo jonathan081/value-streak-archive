@@ -57,42 +57,9 @@ app.post('/search', (req, res) => {
       });
       httpRes.on('end', () => {
         var parsed = JSON.parse(eBayData);
+        
         if(parsed.findCompletedItemsResponse[0].searchResult[0].item != undefined) {
-          parsed = parsed.findCompletedItemsResponse[0].searchResult[0].item;
-          for(var i = 0; i < parsed.length; i++) {
-            var price = parseFloat(parsed[i].sellingStatus[0].convertedCurrentPrice[0].__value__);
-            var date = new Date(parsed[i].listingInfo[0].endTime[0]);
-            prices[i] = {
-                "price": price,
-                "date": date,
-            };
-            if(price < minPrice) {
-              minPrice = price;
-              minPriceDate = date;
-              minTitle = parsed[i].title[0];
-              minImage = parsed[i].galleryURL[0];
-            }
-            if(price > maxPrice) {
-              maxPrice = price;
-              maxPriceDate = date;
-              maxTitle = parsed[i].title[0];
-            }
-            total += price;
-          }
-          averagePrice = total / parsed.length;
-          minImage = minImage.replace('http://', 'https://');
-          toSend = {
-            "minPrice": minPrice,
-            "minPriceDate": minPriceDate,
-            "minTitle": minTitle,
-            "maxPrice": maxPrice,
-            "maxPriceDate": maxPriceDate,
-            "maxTitle": maxTitle,
-            "averagePrice": averagePrice,
-            "minImage": minImage,
-            "prices": prices,
-          };
-          res.send(toSend);
+          res.send(parsed);
         } else
           res.send({"error" : "Something is wrong with the data"});
       })
