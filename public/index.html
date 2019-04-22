@@ -13,7 +13,7 @@
         <h1>ValueStreak</h1>
     </div>
 
-    <div class="search">
+    <form class="search" onsubmit="search();return false">
         <input type="text" id="searchBar" placeholder="Enter the name of a game to search for." />
         <select id='platform'>
             <option value='' selected='selected'>Select platform</option>
@@ -37,8 +37,8 @@
             <option value='Xbox'>Xbox</option>
             <option value=''>Any/Other</option>
         </select>
-        <button onclick="search()" id="searchButton">Search</button>
-    </div>
+        <input type="submit" value="Search" id="searchButton">
+    </form>
 
     <div id="results">
     </div>
