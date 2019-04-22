@@ -1,6 +1,5 @@
 // javascript for ValueStreak index.html
 
-const validator = require('validator');
 var request = new XMLHttpRequest();
 var searchBar = document.getElementById("searchBar");
 var gameName = "";
@@ -16,9 +15,10 @@ var data;
 function search() {
     param = "keywords=";
     gameName = searchBar.value;
+    gameName = gameName.replace('<', '').replace('>', '');
     plat = platform.options[platform.selectedIndex].value;
     if(plat != '') plat = '+' + plat;
-    results.innerHTML = "<p>Searching eBay for " + validator.escape(gameName) + "...</p>";
+    results.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
     keywords = gameName.replace(" ", "+") + plat;
     param += keywords;
     requestData();
@@ -50,10 +50,8 @@ function process(items) {
 
         var minPriceDate = new Date(items.minPriceDate);
         var maxPriceDate = new Date(items.maxPriceDate);
-        results.innerHTML = '<h3>eBay sales for ' + validator.escape(gameName) + ':</h3>';
-        if(validator.isURL(items.minImage)) {
-            results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
-        }
+        results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
+        results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
         results.innerHTML += '<p>The lowest price was: $' + items.minPrice.toFixed(2)
                              + '<br>for "' + items.minTitle
                              + '"<br>on ' + minPriceDate.toString() + '.</p>';

@@ -98,7 +98,7 @@ app.post('/search', (req, res) => {
       })
     })
   } else 
-    res.send({"error" : "Something is wrong with the data"});   
+    res.send({"error" : "Something is wrong with the data"});
 });
 
 app.use(express.static("public"));
