@@ -4,6 +4,7 @@ const validator = require ('validator')
 const http = require('http')
 const path = require('path')
 const PORT = Number(process.env.PORT) || 3000
+const EBAY_KEY = process.env.EBAYKEY;
 
 const app = express();
 
@@ -23,7 +24,7 @@ url += "&itemFilter(2).name=TopRatedSellerOnly&itemFilter(2).value=true";
 url += "&sortOrder=BestMatch";
 
 // ebay access key
-url += "&SECURITY-APPNAME=ZiyuSong-ValueStr-PRD-279703086-b2b1a6a0";
+url += "&" + EBAY_KEY;
 
 
 app.use(bodyParser.json());
