@@ -23,6 +23,10 @@ express()
         res.sendFile(__dirname + "/index.js");
     })
 
+    .get('/favicon.ico', (req, res) => {
+        res.sendFile(__dirname + "/favicon.ico");
+    })
+
     .listen(PORT)
 
 

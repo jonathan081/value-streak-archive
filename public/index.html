@@ -1,11 +1,14 @@
 <!DOCTYPE HTML>
 
-<html>
+<html lang="en">
 
 <head>
     <title>ValueStreak</title>
+    <link rel="icon" href="favicon.ico" />
+    <link rel="shortcut icon" href="favicon.ico" />
     <link type="text/css" rel="stylesheet" href="style.css" />
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 </head>
 
 <body>
@@ -13,7 +16,7 @@
         <h1>ValueStreak</h1>
     </div>
 
-    <div class="search">
+    <form class="search" onsubmit="search();return false">
         <input type="text" id="searchBar" placeholder="Enter the name of a game to search for." />
         <select id='platform'>
             <option value='' selected='selected'>Select platform</option>
@@ -37,8 +40,8 @@
             <option value='Xbox'>Xbox</option>
             <option value=''>Any/Other</option>
         </select>
-        <button onclick="search()" id="searchButton">Search</button>
-    </div>
+        <input type="submit" value="Search" id="searchButton">
+    </form>
 
     <div id="results">
     </div>
