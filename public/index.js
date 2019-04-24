@@ -74,11 +74,13 @@ function process(items) {
 
 function drawChart(prices) {
 
-    var data = google.visualization.arrayToDataTable([
-          [{label:'Unit', type: 'number'}, {label:'Price', type: 'number'}],
-        ]);
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date of Sale');
+    data.addColumn('number', 'Price');
     for(var i = 0; i < prices.length; i++){
-        data.addRow([i, prices[i].price]);
+        var curr_date = new Date(prices[i].date);
+        console.log(curr_date.getFullYear())
+        data.addRow([new Date(curr_date.getFullYear(), curr_date.getMonth(), curr_date.getDate(), curr_date.getHours(), curr_date.getMinutes()), prices[i].price]);
     }
     
     var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
