@@ -15,12 +15,13 @@ var data;
 function search() {
     param = "keywords=";
     gameName = searchBar.value;
-    gameName = gameName.replace(/\</g, '').replace(/\>/g, '');
+    gameName = gameName.replace('<', '').replace('>', '');
     plat = platform.options[platform.selectedIndex].value;
     if(plat != '') plat = '+' + plat;
     results.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
     keywords = gameName.replace(" ", "+") + plat;
     param += keywords;
+
     requestData();
 }
 
@@ -51,9 +52,7 @@ function process(items) {
         var minPriceDate = new Date(items.minPriceDate);
         var maxPriceDate = new Date(items.maxPriceDate);
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
-        if(items.minImage != "") {
-            results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
-        }
+        results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
         results.innerHTML += '<p>The lowest price was: $' + items.minPrice.toFixed(2)
                              + '<br>for "' + items.minTitle
                              + '"<br>on ' + minPriceDate.toString() + '.</p>';
@@ -61,6 +60,34 @@ function process(items) {
                              + '<br>for "' + items.maxTitle
                              + '"<br>on ' + maxPriceDate.toString() + '.</p>';
         results.innerHTML += '<p>The average price was: $' + items.averagePrice.toFixed(2) + '.</p>';
+        
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(function() { drawChart(items.prices); });
     }
     else results.innerHTML = '<h3>Sorry, no items matched your search.</h3>';
+}
+       
+        
+        
+
+       
+
+function drawChart(prices) {
+
+    var data = google.visualization.arrayToDataTable([
+          [{label:'Unit', type: 'number'}, {label:'Price', type: 'number'}],
+        ]);
+    for(var i = 0; i < prices.length; i++){
+        data.addRow([i, prices[i].price]);
+    }
+    
+    var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+    var options = {
+          title: 'Price History of ' + gameName,
+          curveType: 'function',
+          'width': 800,
+          'height': 500,
+          vAxis: {viewWindow: { min: 0}}
+        };
+    chart.draw(data, options);
 }
