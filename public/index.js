@@ -68,50 +68,6 @@ function process(items) {
     }
     else results.innerHTML = '<h3>Sorry, no items matched your search.</h3>';
 }
-<<<<<<< HEAD
-
-////////////////////////////////////////////////////////////////////////////
-//////////////  Finding statistics of the responsed data  //////////////////
-////////////////////////////////////////////////////////////////////////////
-
-function findingStats(data){
-    var item = data.findCompletedItemsResponse[0].searchResult[0].item;
-        for(var i = 0; i < item.length; i++) {
-            var price = parseFloat(item[i].sellingStatus[0].convertedCurrentPrice[0].__value__);
-            var date = new Date(item[i].listingInfo[0].endTime[0]);
-            prices[i] = {
-                "price": price,
-                "date": date,
-            };
-            if(price < minPrice) {
-              minPrice = price;
-              minPriceDate = date;
-              minTitle = item[i].title[0];
-              minImage = item[i].galleryURL[0];
-            }
-            if(price > maxPrice) {
-              maxPrice = price;
-              maxPriceDate = date;
-              maxTitle = item[i].title[0];
-            }
-            total += price;
-          }
-          averagePrice = total / item.length;
-          minImage = minImage.replace('http://', 'https://');
-          var stats = {
-            "minPrice": minPrice,
-            "minPriceDate": minPriceDate,
-            "minTitle": minTitle,
-            "maxPrice": maxPrice,
-            "maxPriceDate": maxPriceDate,
-            "maxTitle": maxTitle,
-            "averagePrice": averagePrice,
-            "minImage": minImage,
-            "prices": prices,
-          };
-    return stats;
-}
-=======
        
         
         
@@ -139,4 +95,3 @@ function drawChart(prices) {
         };
     chart.draw(data, options);
 }
->>>>>>> d4541bcbe5e0506c1a58a2a388c0f2036c713582
