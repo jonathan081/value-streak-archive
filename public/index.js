@@ -16,12 +16,13 @@ var stats;
 function search() {
     param = "keywords=";
     gameName = searchBar.value;
-    gameName = gameName.replace(/\</g, '').replace(/\>/g, '');
+    gameName = gameName.replace('<', '').replace('>', '');
     plat = platform.options[platform.selectedIndex].value;
     if(plat != '') plat = '+' + plat;
     results.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
     keywords = gameName.replace(" ", "+") + plat;
     param += keywords;
+
     requestData();
 }
 
@@ -53,9 +54,7 @@ function process(items) {
         var minPriceDate = new Date(items.minPriceDate);
         var maxPriceDate = new Date(items.maxPriceDate);
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
-        if(items.minImage != "") {
-            results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
-        }
+        results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
         results.innerHTML += '<p>The lowest price was: $' + items.minPrice.toFixed(2)
                              + '<br>for "' + items.minTitle
                              + '"<br>on ' + minPriceDate.toString() + '.</p>';
@@ -63,9 +62,13 @@ function process(items) {
                              + '<br>for "' + items.maxTitle
                              + '"<br>on ' + maxPriceDate.toString() + '.</p>';
         results.innerHTML += '<p>The average price was: $' + items.averagePrice.toFixed(2) + '.</p>';
+        
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(function() { drawChart(items.prices); });
     }
     else results.innerHTML = '<h3>Sorry, no items matched your search.</h3>';
 }
+<<<<<<< HEAD
 
 ////////////////////////////////////////////////////////////////////////////
 //////////////  Finding statistics of the responsed data  //////////////////
@@ -108,3 +111,32 @@ function findingStats(data){
           };
     return stats;
 }
+=======
+       
+        
+        
+
+       
+
+function drawChart(prices) {
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date of Sale');
+    data.addColumn('number', 'Price');
+    for(var i = 0; i < prices.length; i++){
+        var curr_date = new Date(prices[i].date);
+        console.log(curr_date.getFullYear())
+        data.addRow([new Date(curr_date.getFullYear(), curr_date.getMonth(), curr_date.getDate(), curr_date.getHours(), curr_date.getMinutes()), prices[i].price]);
+    }
+    
+    var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+    var options = {
+          title: 'Price History of ' + gameName,
+          curveType: 'function',
+          'width': 800,
+          'height': 500,
+          vAxis: {viewWindow: { min: 0}}
+        };
+    chart.draw(data, options);
+}
+>>>>>>> d4541bcbe5e0506c1a58a2a388c0f2036c713582
