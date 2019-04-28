@@ -12,6 +12,37 @@ var server = "https://value-streak.herokuapp.com/search";
 var param = "keywords=";
 var data;
 
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////  User Login System  ///////////////////////////
+////////////////////////////////////////////////////////////////////////////
+var provider = new firebase.auth.GoogleAuthProvider();
+var btnSignIn = document.getElementById("signin");
+btnSignIn.addEventListener('click', e => {
+    var user = firebase.auth().signInWithRedirect(provider);
+});
+
+firebase.auth().onAuthStateChanged(firebaseUser => {
+    if (firebaseUser) {
+        console.log(firebaseUser.uid);
+    } else {
+        console.log('not logged in');
+    }
+});
+
+var btnSignOut = document.getElementById("signout");
+btnSignOut.addEventListener('click', e => {
+    firebase.auth().signOut();
+});
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////
+///////////////////////  interaction with server  //////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
 function search() {
     param = "keywords=";
     gameName = searchBar.value;
