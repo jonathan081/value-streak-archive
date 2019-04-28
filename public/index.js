@@ -53,13 +53,13 @@ function process(items) {
         var maxPriceDate = new Date(items.maxPriceDate);
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
         results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
-        results.innerHTML += '<p>The lowest price was: $' + items.minPrice.toFixed(2)
-                             + '<br>for "' + items.minTitle
-                             + '"<br>on ' + minPriceDate.toString() + '.</p>';
-        results.innerHTML += '<p>The highest price was: $' + items.maxPrice.toFixed(2)
-                             + '<br>for "' + items.maxTitle
-                             + '"<br>on ' + maxPriceDate.toString() + '.</p>';
-        results.innerHTML += '<p>The average price was: $' + items.averagePrice.toFixed(2) + '.</p>';
+        results.innerHTML += '<div id=\"min\"><p>The lowest price was: $' + items.minPrice.toFixed(2)
+                             + '<br>For<br> "' + items.minTitle
+                             + '"<br>On<br> ' + minPriceDate.toString() + '.</p></div>';
+        results.innerHTML += '<div id=\"max\"><p>The highest price was: $' + items.maxPrice.toFixed(2)
+                             + '<br>For<br> "' + items.maxTitle
+                             + '"<br>On<br> ' + maxPriceDate.toString() + '.</p></div>';
+        results.innerHTML += '<div id=\"avg\"><p>The average price was: $' + items.averagePrice.toFixed(2) + '.</p></div>';
         
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(function() { drawChart(items.prices); });
@@ -76,10 +76,9 @@ function drawChart(prices) {
 
     var data = new google.visualization.DataTable();
     data.addColumn('date', 'Date of Sale');
-    data.addColumn('number', 'Price');
+    data.addColumn('number', 'Deal Price');
     for(var i = 0; i < prices.length; i++){
         var curr_date = new Date(prices[i].date);
-        console.log(curr_date.getFullYear())
         data.addRow([new Date(curr_date.getFullYear(), curr_date.getMonth(), curr_date.getDate(), curr_date.getHours(), curr_date.getMinutes()), prices[i].price]);
     }
     
@@ -87,6 +86,7 @@ function drawChart(prices) {
     var options = {
           title: 'Price History of ' + gameName,
           curveType: 'function',
+          colors: ['#000000'],
           'width': 800,
           'height': 500,
           vAxis: {viewWindow: { min: 0}}
