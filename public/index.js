@@ -89,6 +89,7 @@ function drawChart(prices) {
           curveType: 'function',
           'width': 800,
           'height': 500,
+          is3D: true,
           vAxis: {viewWindow: { min: 0}}
         };
     chart.draw(data, options);
