@@ -5,6 +5,14 @@ body {
     text-align: center;
 }
 
+#chart_div {
+    width: 950px;
+    height: 650px;
+    border: 50px;
+    padding: 50px;
+    margin: 50px;
+}
+
 #results img {
     border: 1px solid black;
     border-radius: 5px;
