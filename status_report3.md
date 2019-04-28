@@ -20,3 +20,6 @@
 - Fully implement the google charts or any other visualizer so we can the past months data for a game on a scatter plot.
  
 - Add the style sheet to support the mobile version of the site.
+
+# Commments by Ming
+* I'm curious what game / games work as test cases...
