@@ -79,7 +79,7 @@ body {
 }
 
 @media only screen
-and (min-width: 600px) {
+and (min-width: 300px) {
 
     #searchBar {
         width: 90%;
@@ -92,10 +92,42 @@ and (min-width: 600px) {
     #searchButton {
         width: 45%;
     }
+
+    #min {
+        width: 300px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #max {
+        width: 300px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #avg {
+        width: 300px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #chart_div {
+        width: 300px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
 }
 
 @media only screen
-and (min-width: 812px) {
+and (min-width: 768px) {
 
     #searchBar {
         width: 60%;
@@ -107,5 +139,37 @@ and (min-width: 812px) {
 
     #searchButton {
         width: 15%;
+    }
+
+    #min {
+        width: 700px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #max {
+        width: 700px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #avg {
+        width: 700px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #chart_div {
+        width: 740px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
     }
 }
