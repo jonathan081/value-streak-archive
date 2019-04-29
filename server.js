@@ -9,9 +9,8 @@ const EBAY_KEY = process.env.EBAYKEY;
 const mongoURI = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient, format = require('util').format;
 var db = MongoClient.connect(mongoURI, (err, client) => {
-  if(err) throw err;
-  db = client.db('heroku_jsrqth5');
-});
+  db = client;
+})
 const collName = 'games';
 
 const app = express();

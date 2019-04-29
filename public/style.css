@@ -19,6 +19,14 @@ a:hover, a:active {
     cursor: pointer;
 }
 
+.chart {
+    width:100%;
+    min-height: 100px;
+}
+.row {
+    margin: 0 !important;
+}
+
 #chart_div {
     width: 250px;
     height: auto;
