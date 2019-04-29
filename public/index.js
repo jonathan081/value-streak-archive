@@ -94,24 +94,26 @@ function process(items) {
         results.innerHTML += '<div id=\"avg\"><p>The average price was: $' + items.averagePrice.toFixed(2) + '.</p></div>';
         if(items.oldestAvg != '' && items.lastAvg != '') {
             var change = '';
+            var d = new Date(items.oldestAvg.date);
             if(items.oldestAvg.price - items.averagePrice > 0) {
-                change = 'decreased';
+                change = '<span class="down">decreased</span>';
             }
             else if(items.oldestAvg.price - items.averagePrice < 0) {
-                change = 'increased';
+                change = '<span class="up">increased</span>';
             }
             else change = 'has not changed';
             results.innerHTML += '<p>The average price has ' + change + ' since the earliest recorded search on '
-                                 + items.oldestAvg.date.toString() + '.</p>';
+                                 + d.toString() + '.</p>';
+            d = new Date(items.lastAvg.date);
             if(items.lastAvg.price - items.averagePrice > 0) {
-                change = 'decreased';
+                change = '<span class="down">decreased</span>';
             }
             else if(items.lastAvg.price - items.averagePrice < 0) {
-                change = 'increased';
+                change = '<span class="up">increased</span>';
             }
             else change = 'has not changed';
             results.innerHTML += '<p>The average price has ' + change + ' since the most recent recorded search on '
-                                 + items.lastAvg.date.toString() + '.</p>';
+                                 + d.toString() + '.</p>';
         }
         
         google.charts.load('current', {'packages':['corechart']});

@@ -19,6 +19,16 @@ a:hover, a:active {
     cursor: pointer;
 }
 
+.up {
+    color: red;
+    font-weight: bold;
+}
+
+.down {
+    color: blue;
+    font-weight: bold;
+}
+
 #chart_div {
     width: 250px;
     height: auto;
