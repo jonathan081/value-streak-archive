@@ -7,7 +7,7 @@ body {
 }
 
 .index {
-    font-size: 64px;
+    font-size: 40px;
 }
 
 .index a{
@@ -32,7 +32,7 @@ li.navibar_item a{
 	color: black;
 	text-decoration: none;
 	text-align: center;
-	font-size: 24px;
+	font-size: 18px;
 }
 
 li.navibar_item {
@@ -45,11 +45,17 @@ li.navibar_item a:hover {
 	color: red
 }
 
+li.navibar_button {
+    float: right;
+    position: relative;
+    right: 1%;
+    margin-bottom: 5px;
+}
+
 #signinBtn{
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: none;
     font-family: "Arial Black", Gadget, sans-serif;
-    margin-left: 1180px;
     text-align: center;
     background-color: black;
     border: none;
@@ -64,10 +70,9 @@ li.navibar_item a:hover {
 }
 
 #signoutBtn{
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: none;
     font-family: "Arial Black", Gadget, sans-serif;
-    margin-left: 1180px;
     text-align: center;
     background-color: black;
     border: none;
@@ -84,35 +89,25 @@ li.navibar_item a:hover {
 
 
 #chart_div {
-    width: 950px;
-    height: 650px;
-    border: 50px;
-    padding: 50px;
+    width: 250px;
+    min-height: 200px;
+    border: 10px;
+    padding: 10px;
     margin: auto;
 }
 
-#min {
-    width: 800px;
-    height: 100px;
-    border: 50px;
-    padding: 30px;
-    margin: auto;
+.up {
+    color: red;
+    font-weight: bold;
 }
 
-#max {
-    width: 800px;
-    height: 100px;
-    border: 50px;
-    padding: 30px;
-    margin: auto;
+.down {
+    color: blue;
+    font-weight: bold;
 }
 
-#avg {
-    width: 800px;
-    height: 50px;
-    border: 50px;
-    padding: 30px;
-    margin: auto;
+.res {
+    margin: 0 25px 30px;
 }
 
 #results img {
@@ -181,23 +176,7 @@ and (min-width: 300px) {
         width: 45%;
     }
 
-    #min {
-        width: 300px;
-        height: auto;
-        border: 10px;
-        padding: 10px;
-        margin: auto;
-    }
-
-    #max {
-        width: 300px;
-        height: auto;
-        border: 10px;
-        padding: 10px;
-        margin: auto;
-    }
-
-    #avg {
+    .res {
         width: 300px;
         height: auto;
         border: 10px;
@@ -207,15 +186,20 @@ and (min-width: 300px) {
 
     #chart_div {
         width: 300px;
-        height: auto;
-        border: 10px;
-        padding: 10px;
-        margin: auto;
+        min-height: 200px;
     }
+
+    li.navibar_item a{
+        padding: 4px;
+    }
+
 }
 
 @media only screen
 and (min-width: 768px) {
+    .index {
+        font-size: 64px;
+    }
 
     #searchBar {
         width: 60%;
@@ -229,23 +213,7 @@ and (min-width: 768px) {
         width: 15%;
     }
 
-    #min {
-        width: 700px;
-        height: auto;
-        border: 10px;
-        padding: 10px;
-        margin: auto;
-    }
-
-    #max {
-        width: 700px;
-        height: auto;
-        border: 10px;
-        padding: 10px;
-        margin: auto;
-    }
-
-    #avg {
+    .res {
         width: 700px;
         height: auto;
         border: 10px;
@@ -255,9 +223,24 @@ and (min-width: 768px) {
 
     #chart_div {
         width: 740px;
-        height: auto;
-        border: 10px;
-        padding: 10px;
-        margin: auto;
+        min-height: 300px;
+    }
+
+    li.navibar_item {
+        font-size: 24px;
+        left: 1%;
+    }
+
+    #signinBtn{
+        font-size: 24px;
+    }
+    
+    #signoutBtn{
+        font-size: 24px;
+    }
+
+    li.navibar_item a{
+        padding: 8px;
+        font-size: 24px;
     }
 }

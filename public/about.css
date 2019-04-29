@@ -40,3 +40,30 @@ and (min-width: 768px) {
         width: 750px;
     }
 }
+
+ul.navibar {
+    position: static;
+    list-style-type: none;
+    overflow: hidden;
+    background-color: white;
+    padding-top: 0.3%;
+}
+
+li.navibar_item a{
+    padding: 8px;
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+    font-size: 24px;
+}
+
+li.navibar_item {
+    float: left;
+    position: relative;
+    left: 1%;
+}
+
+li.navibar_item a:hover {
+    color: red
+}
