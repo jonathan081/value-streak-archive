@@ -7,6 +7,7 @@ var plat = "";
 var searching = document.getElementById("searching");
 var results = document.getElementById("results");
 var platform = document.getElementById('platform');
+var style = document.getElementById('style');
 var returned_data;
 var returned_items;
 var server = "https://value-streak.herokuapp.com/search";
@@ -18,8 +19,12 @@ var stats;
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////  User Login System  ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////
-var provider = new firebase.auth.GoogleAuthProvider();
-var btnSignIn = document.getElementById("signin");
+// Initialize Firebase
+
+provider = new firebase.auth.GoogleAuthProvider();
+var btnSignIn = document.getElementById("signinBtn");
+var btnSignOut = document.getElementById("signoutBtn");
+
 btnSignIn.addEventListener('click', e => {
     var user = firebase.auth().signInWithRedirect(provider);
 });
@@ -27,14 +32,19 @@ btnSignIn.addEventListener('click', e => {
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
         console.log(firebaseUser.uid);
+        btnSignIn.style.display="none";
+        btnSignOut.style.display="inline-block";
+
     } else {
         console.log('not logged in');
     }
 });
 
-var btnSignOut = document.getElementById("signout");
+
 btnSignOut.addEventListener('click', e => {
     firebase.auth().signOut();
+    btnSignIn.style.display="inline-block";
+    btnSignOut.style.display="none";
 });
 
 
@@ -54,7 +64,6 @@ function search() {
     searching.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
     keywords = gameName.replace(" ", "+") + plat;
     param += keywords;
-
     requestData();
 }
 
@@ -80,20 +89,48 @@ function process(items) {
     if(items.hasOwnProperty('minPrice') && items.hasOwnProperty('minPriceDate')
         && items.hasOwnProperty('minTitle') && items.hasOwnProperty('minImage')
         && items.hasOwnProperty('maxPrice') && items.hasOwnProperty('maxPriceDate')
-        && items.hasOwnProperty('maxTitle') && items.hasOwnProperty('averagePrice')) {
+        && items.hasOwnProperty('maxTitle') && items.hasOwnProperty('averagePrice')
+        && items.hasOwnProperty('oldestAvg') && items.hasOwnProperty('lastAvg')) {
 
         var minPriceDate = new Date(items.minPriceDate);
         var maxPriceDate = new Date(items.maxPriceDate);
+<<<<<<< HEAD
         window.location.replace("result.html");
+=======
+        style.setAttribute('href', 'result.css');
+>>>>>>> 1c0d911e98a3c70c01dd107023de1abd429c9b7e
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
         results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
-        results.innerHTML += '<div id=\"min\"><p>The lowest price was: $' + items.minPrice.toFixed(2)
+        results.innerHTML += '<div class="res"><p>The lowest price was: $' + items.minPrice.toFixed(2)
                              + '<br>For<br> "' + items.minTitle
                              + '"<br>On<br> ' + minPriceDate.toString() + '.</p></div>';
-        results.innerHTML += '<div id=\"max\"><p>The highest price was: $' + items.maxPrice.toFixed(2)
+        results.innerHTML += '<div class="res"><p>The highest price was: $' + items.maxPrice.toFixed(2)
                              + '<br>For<br> "' + items.maxTitle
                              + '"<br>On<br> ' + maxPriceDate.toString() + '.</p></div>';
-        results.innerHTML += '<div id=\"avg\"><p>The average price was: $' + items.averagePrice.toFixed(2) + '.</p></div>';
+        results.innerHTML += '<div class="res"><p>The average price was: $' + items.averagePrice.toFixed(2) + '.</p></div>';
+        if(items.oldestAvg != '' && items.lastAvg != '') {
+            var change = '';
+            var d = new Date(items.oldestAvg.date);
+            if(items.oldestAvg.price - items.averagePrice > 0) {
+                change = '<span class="down">decreased</span>';
+            }
+            else if(items.oldestAvg.price - items.averagePrice < 0) {
+                change = '<span class="up">increased</span>';
+            }
+            else change = 'has not changed';
+            results.innerHTML += '<div class="res"><p>The average price has ' + change + ' since the earliest recorded search on '
+                                 + d.toString() + '.</p></div>';
+            d = new Date(items.lastAvg.date);
+            if(items.lastAvg.price - items.averagePrice > 0) {
+                change = '<span class="down">decreased</span>';
+            }
+            else if(items.lastAvg.price - items.averagePrice < 0) {
+                change = '<span class="up">increased</span>';
+            }
+            else change = 'has not changed';
+            results.innerHTML += '<div class="res"><p>The average price has ' + change + ' since the most recent recorded search on '
+                                 + d.toString() + '.</p>';
+        }
         
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(function() { drawChart(items.prices); });
@@ -101,11 +138,6 @@ function process(items) {
     else results.innerHTML = '<h3>Sorry, no items matched your search.</h3>';
 }
        
-        
-        
-
-       
-
 function drawChart(prices) {
 
     var data = new google.visualization.DataTable();
@@ -121,8 +153,8 @@ function drawChart(prices) {
           title: 'Price History of ' + gameName,
           curveType: 'function',
           colors: ['#000000'],
-          'width': 800,
-          'height': 500,
+          //'width': 800,
+          //'height': 500,
           vAxis: {viewWindow: { min: 0}}
         };
     chart.draw(data, options);

@@ -6,6 +6,12 @@ const path = require('path')
 const PORT = Number(process.env.PORT) || 3000
 const EBAY_KEY = process.env.EBAYKEY;
 
+const mongoURI = process.env.MONGODB_URI;
+const MongoClient = require('mongodb').MongoClient, format = require('util').format;
+var db = MongoClient.connect(mongoURI, (err, client) => {
+  if(!err) db = client;
+})
+
 const app = express();
 
 var url = "http://svcs.ebay.com/services/search/FindingService/v1";
@@ -50,6 +56,8 @@ app.post('/search', (req, res) => {
   var minTitle = "";
   var minImage = "";
   var prices = [];
+  var oldestAvg = "";
+  var lastAvg = "";
   if (req.body.hasOwnProperty('keywords')) {
     var key = validator.escape(req.body.keywords);
     url += "&keywords=" + key;
@@ -84,18 +92,41 @@ app.post('/search', (req, res) => {
           }
           averagePrice = total / parsed.length;
           minImage = minImage.replace('http://', 'https://');
-          toSend = {
-            "minPrice": minPrice,
-            "minPriceDate": minPriceDate,
-            "minTitle": minTitle,
-            "maxPrice": maxPrice,
-            "maxPriceDate": maxPriceDate,
-            "maxTitle": maxTitle,
-            "averagePrice": averagePrice,
-            "minImage": minImage,
-            "prices": prices,
-          };
-          res.send(toSend);
+
+          db.collection('games', (err, coll) => {
+            coll.findOne({'title': key}, (err, old) => {
+                var toUpdate = {
+                "price": averagePrice,
+                "date": new Date(),
+              };
+
+              toSend = {
+                "minPrice": minPrice,
+                "minPriceDate": minPriceDate,
+                "minTitle": minTitle,
+                "maxPrice": maxPrice,
+                "maxPriceDate": maxPriceDate,
+                "maxTitle": maxTitle,
+                "averagePrice": averagePrice,
+                "minImage": minImage,
+                "prices": prices,
+                "oldestAvg": oldestAvg,
+                "lastAvg": lastAvg,
+              };
+
+              if(old != null) {
+                toSend.oldestAvg = old.oldest;
+                toSend.lastAvg = old.last;
+                coll.updateOne({'title': key}, {$set: {'last': toUpdate}});
+                res.send(toSend);
+              } else {
+                coll.insertOne({'title': key, 'oldest': toUpdate, 'last': toUpdate});
+                res.send(toSend);
+              }
+            });
+            
+          });
+
         } else
           res.send({"error" : "Something is wrong with the data"});
       })
@@ -104,13 +135,13 @@ app.post('/search', (req, res) => {
     res.send({"error" : "Something is wrong with the data"});
 });
 
-// app.use((req, res, next) => {
-//     if(req.header('x-forwarded-proto') !== 'https') {
-//         res.redirect(`https://${req.header('host')}${req.url}`);
-//     } else {
-//         next();
-//     }
-// });
+app.use((req, res, next) => {
+    if(req.header('x-forwarded-proto') !== 'https') {
+        res.redirect(`https://${req.header('host')}${req.url}`);
+    } else {
+        next();
+    }
+});
 app.use(express.static("public"));
 
 app.listen(PORT, (err)=> console.log("Listening on port " + PORT));

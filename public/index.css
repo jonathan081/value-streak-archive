@@ -1,0 +1,251 @@
+body {
+    font-family: "Arial Black", Gadget, sans-serif;
+    color: black;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.index {
+    font-size: 64px;
+}
+
+.index a{
+	text-align: center;
+    text-decoration: none;
+    color: black;
+    display:inline-block;
+    margin-top: 10%;
+}
+
+ul.navibar {
+	position: static;
+	list-style-type: none;
+	overflow: hidden;
+    background-color: white;
+    padding-top: 0.3%;
+}
+
+li.navibar_item a{
+	padding: 8px;
+	background-color: white;
+	color: black;
+	text-decoration: none;
+	text-align: center;
+	font-size: 24px;
+}
+
+li.navibar_item {
+	float: left;
+	position: relative;
+	left: 1%;
+}
+
+li.navibar_item a:hover {
+	color: red
+}
+
+#signinBtn{
+    font-size: 16px;
+    text-decoration: none;
+    font-family: "Arial Black", Gadget, sans-serif;
+    margin-left: 1180px;
+    text-align: center;
+    background-color: black;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+}
+
+#signinBtn:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+#signoutBtn{
+    font-size: 16px;
+    text-decoration: none;
+    font-family: "Arial Black", Gadget, sans-serif;
+    margin-left: 1180px;
+    text-align: center;
+    background-color: black;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: none;
+}
+
+
+#signoutBtn:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+
+#chart_div {
+    width: 950px;
+    height: 650px;
+    border: 50px;
+    padding: 50px;
+    margin: auto;
+}
+
+#min {
+    width: 800px;
+    height: 100px;
+    border: 50px;
+    padding: 30px;
+    margin: auto;
+}
+
+#max {
+    width: 800px;
+    height: 100px;
+    border: 50px;
+    padding: 30px;
+    margin: auto;
+}
+
+#avg {
+    width: 800px;
+    height: 50px;
+    border: 50px;
+    padding: 30px;
+    margin: auto;
+}
+
+#results img {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    width: 150px;
+}
+
+#searchBar {
+    font-family: "Arial Black", Gadget, sans-serif;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid black;
+    width: 90%;
+    background: white;
+    margin-bottom: 10px;
+}
+
+#platform {
+    font-family: "Arial Black", Gadget, sans-serif;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background: black;
+    border: 1px solid black;
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+#searchButton {
+    font-family: "Arial Black", Gadget, sans-serif;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: black;
+    border: 1px solid black;
+    width: 90%;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+@media only screen
+and (min-width: 300px) {
+
+    #searchBar {
+        width: 90%;
+    }
+
+    #platform {
+        width: 45%;
+    }
+
+    #searchButton {
+        width: 45%;
+    }
+
+    #min {
+        width: 300px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #max {
+        width: 300px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #avg {
+        width: 300px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #chart_div {
+        width: 300px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+}
+
+@media only screen
+and (min-width: 768px) {
+
+    #searchBar {
+        width: 60%;
+    }
+
+    #platform {
+        width: 15%;
+    }
+
+    #searchButton {
+        width: 15%;
+    }
+
+    #min {
+        width: 700px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #max {
+        width: 700px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #avg {
+        width: 700px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #chart_div {
+        width: 740px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+}
