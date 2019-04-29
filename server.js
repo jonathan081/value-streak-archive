@@ -10,7 +10,7 @@ const mongoURI = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient, format = require('util').format;
 var db = MongoClient.connect(mongoURI, (err, client) => {
   if(err) throw err;
-  db = client.db('valuestreak');
+  db = client.db('heroku_jsrqth5');
 });
 const collName = 'games';
 
