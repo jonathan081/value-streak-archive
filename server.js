@@ -118,7 +118,7 @@ app.post('/search', (req, res) => {
                 "lastAvg": lastAvg,
               };
 
-              console.lg('5');
+              console.log('5');
               console.log(old);
 
               if(old != null) {
