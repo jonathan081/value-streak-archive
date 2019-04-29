@@ -99,7 +99,7 @@ and (min-width: 300px) {
 
     .res {
         width: 300px;
-        height: auto;
+        height: 200px;
         border: 10px;
         padding: 10px;
         margin: auto;
@@ -127,7 +127,7 @@ and (min-width: 768px) {
 
     .res {
         width: 700px;
-        height: auto;
+        height: 500px;
         border: 10px;
         padding: 10px;
         margin: auto;
