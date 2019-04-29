@@ -66,7 +66,6 @@ app.post('/search', (req, res) => {
         eBayData += d;
       });
       httpRes.on('end', () => {
-        console.log('1');
         var parsed = JSON.parse(eBayData);
         if(parsed.findCompletedItemsResponse[0].searchResult[0].item != undefined) {
           parsed = parsed.findCompletedItemsResponse[0].searchResult[0].item;
@@ -90,11 +89,10 @@ app.post('/search', (req, res) => {
               maxTitle = parsed[i].title[0];
             }
             total += price;
-            console.log('2');
           }
           averagePrice = total / parsed.length;
           minImage = minImage.replace('http://', 'https://');
-          console.log('3');
+          console.log('before database call');
 
           db.collection('games', (err, coll) => {
             coll.findOne({'title': key}, (err, old) => {
@@ -122,11 +120,15 @@ app.post('/search', (req, res) => {
               console.log(old);
 
               if(old != null) {
+                console.log('5');
+                console.log(toSend);
                 toSend.oldestAvg = old.oldest;
                 toSend.lastAvg = old.last;
                 coll.updateOne({'title': key}, {$set: {'last': toUpdate}});
                 res.send(toSend);
               } else {
+                console.log('6');
+                console.log(toSend);
                 coll.insertOne({'title': key, 'oldest': toUpdate, 'last': toUpdate});
                 res.send(toSend);
               }
