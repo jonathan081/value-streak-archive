@@ -59,6 +59,7 @@ app.post('/search', (req, res) => {
   var oldestAvg = "";
   var lastAvg = "";
   if (req.body.hasOwnProperty('keywords')) {
+    var key = validator.escape(req.body.keywords);
     url += "&keywords=" + key;
     http.get(url, (httpRes) => {
       httpRes.on('data', function(d){
@@ -89,7 +90,6 @@ app.post('/search', (req, res) => {
             }
             total += price;
           }
-          console.log("eBay returns: " + maxTitle);
           averagePrice = total / parsed.length;
           minImage = minImage.replace('http://', 'https://');
 
@@ -118,11 +118,9 @@ app.post('/search', (req, res) => {
                 toSend.oldestAvg = old.oldest;
                 toSend.lastAvg = old.last;
                 coll.updateOne({'title': key}, {$set: {'last': toUpdate}});
-                console.log("Database returns: " + toSend.maxTitle);
                 res.send(toSend);
               } else {
                 coll.insertOne({'title': key, 'oldest': toUpdate, 'last': toUpdate});
-                console.log("Database returns: " + toSend.maxTitle);
                 res.send(toSend);
               }
             });
