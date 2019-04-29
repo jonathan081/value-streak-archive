@@ -99,13 +99,6 @@ app.post('/search', (req, res) => {
               "price": averagePrice,
               "date": new Date(),
             };
-            if(old) {
-              oldestAvg = old.oldest;
-              lastAvg = old.last;
-              coll.updateOne({'title': key}, {$set: {'last': toUpdate}});
-            } else {
-              coll.insertOne({'title': key, 'oldest': toUpdate, 'last': toUpdate});
-            }
 
             toSend = {
             "minPrice": minPrice,
@@ -119,8 +112,17 @@ app.post('/search', (req, res) => {
             "prices": prices,
             "oldestAvg": oldestAvg,
             "lastAvg": lastAvg,
-          };
-          res.send(toSend);
+            };
+
+            if(old) {
+              toSend.oldestAvg = old.oldest;
+              toSend.lastAvg = old.last;
+              coll.updateOne({'title': key}, {$set: {'last': toUpdate}});
+              res.send(toSend);
+            } else {
+              coll.insertOne({'title': key, 'oldest': toUpdate, 'last': toUpdate});
+              res.send(toSend);
+            }
           });
 
         } else
