@@ -11,6 +11,7 @@ var returned_items;
 var server = "https://value-streak.herokuapp.com/search";
 var param = "keywords=";
 var data;
+var stats;
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -63,7 +64,8 @@ function requestData() {
         if (request.readyState == 4 && request.status == 200){
             data = JSON.parse(request.responseText);
             console.log(data);
-            process(data);
+            stats = findingStats(data);
+            process(stats);
         }
     }
     request.send(param);
