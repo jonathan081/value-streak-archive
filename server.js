@@ -93,9 +93,25 @@ app.post('/search', (req, res) => {
           averagePrice = total / parsed.length;
           minImage = minImage.replace('http://', 'https://');
 
+          toSend = {
+                "minPrice": minPrice,
+                "minPriceDate": minPriceDate,
+                "minTitle": minTitle,
+                "maxPrice": maxPrice,
+                "maxPriceDate": maxPriceDate,
+                "maxTitle": maxTitle,
+                "averagePrice": averagePrice,
+                "minImage": minImage,
+                "prices": prices,
+                "oldestAvg": oldestAvg,
+                "lastAvg": lastAvg,
+              };
+
+          res.send(toSend);
+
           db.collection('games', (err, coll) => {
             coll.findOne({'title': key}, (err, old) => {
-                var toUpdate = {
+              var toUpdate = {
                 "price": averagePrice,
                 "date": new Date(),
               };
