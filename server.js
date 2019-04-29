@@ -104,7 +104,7 @@ app.post('/search', (req, res) => {
             if(old) {
               oldestAvg = old.oldest;
               lastAvg = old.last;
-              coll.updateOne({'title': key}, {'last': toUpdate});
+              coll.updateOne({'title': key}, ($set: {'last': toUpdate}});
             } else {
               coll.insertOne({'title': key, 'oldest': toUpdate, 'last': toUpdate});
             }
