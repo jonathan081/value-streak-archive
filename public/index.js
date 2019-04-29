@@ -4,7 +4,6 @@ var request = new XMLHttpRequest();
 var searchBar = document.getElementById("searchBar");
 var gameName = "";
 var plat = "";
-var searching = document.getElementById("searching");
 var results = document.getElementById("results");
 var platform = document.getElementById('platform');
 var style = document.getElementById('style');
@@ -61,7 +60,7 @@ function search() {
     gameName = gameName.replace('<', '').replace('>', '');
     plat = platform.options[platform.selectedIndex].value;
     if(plat != '') plat = '+' + plat;
-    searching.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
+    results.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
     keywords = gameName.replace(" ", "+") + plat;
     param += keywords;
     requestData();
