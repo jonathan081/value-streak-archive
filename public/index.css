@@ -55,6 +55,7 @@ li.navibar_item a:hover {
     border: none;
     color: white;
     cursor: pointer;
+    display: inline-block;
 }
 
 #signinBtn:hover{
@@ -71,11 +72,14 @@ li.navibar_item a:hover {
     border: none;
     color: white;
     cursor: pointer;
+    display: none;
 }
+
 
 #signoutBtn:hover{
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
+
 
 #chart_div {
     width: 950px;

@@ -22,6 +22,8 @@ var stats;
 
 provider = new firebase.auth.GoogleAuthProvider();
 var btnSignIn = document.getElementById("signinBtn");
+var btnSignOut = document.getElementById("signoutBtn");
+
 btnSignIn.addEventListener('click', e => {
     var user = firebase.auth().signInWithRedirect(provider);
 });
@@ -29,14 +31,19 @@ btnSignIn.addEventListener('click', e => {
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
         console.log(firebaseUser.uid);
+        btnSignIn.style.display="none";
+        btnSignOut.style.display="inline-block";
+
     } else {
         console.log('not logged in');
     }
 });
 
-var btnSignOut = document.getElementById("signoutBtn");
+
 btnSignOut.addEventListener('click', e => {
     firebase.auth().signOut();
+    btnSignIn.style.display="inline-block";
+    btnSignOut.style.display="none";
 });
 
 
