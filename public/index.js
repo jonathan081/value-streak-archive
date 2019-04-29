@@ -94,11 +94,7 @@ function process(items) {
 
         var minPriceDate = new Date(items.minPriceDate);
         var maxPriceDate = new Date(items.maxPriceDate);
-<<<<<<< HEAD
-        window.location.replace("result.html");
-=======
         style.setAttribute('href', 'result.css');
->>>>>>> 1c0d911e98a3c70c01dd107023de1abd429c9b7e
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
         results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
         results.innerHTML += '<div class="res"><p>The lowest price was: $' + items.minPrice.toFixed(2)
