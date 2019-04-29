@@ -85,13 +85,13 @@ function process(items) {
         var maxPriceDate = new Date(items.maxPriceDate);
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
         results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
-        results.innerHTML += '<div id=\"min\"><p>The lowest price was: $' + items.minPrice.toFixed(2)
+        results.innerHTML += '<div class="res"><p>The lowest price was: $' + items.minPrice.toFixed(2)
                              + '<br>For<br> "' + items.minTitle
                              + '"<br>On<br> ' + minPriceDate.toString() + '.</p></div>';
-        results.innerHTML += '<div id=\"max\"><p>The highest price was: $' + items.maxPrice.toFixed(2)
+        results.innerHTML += '<div class="res"><p>The highest price was: $' + items.maxPrice.toFixed(2)
                              + '<br>For<br> "' + items.maxTitle
                              + '"<br>On<br> ' + maxPriceDate.toString() + '.</p></div>';
-        results.innerHTML += '<div id=\"avg\"><p>The average price was: $' + items.averagePrice.toFixed(2) + '.</p></div>';
+        results.innerHTML += '<div class="res"><p>The average price was: $' + items.averagePrice.toFixed(2) + '.</p></div>';
         if(items.oldestAvg != '' && items.lastAvg != '') {
             var change = '';
             var d = new Date(items.oldestAvg.date);
@@ -102,8 +102,8 @@ function process(items) {
                 change = '<span class="up">increased</span>';
             }
             else change = 'has not changed';
-            results.innerHTML += '<p>The average price has ' + change + ' since the earliest recorded search on '
-                                 + d.toString() + '.</p>';
+            results.innerHTML += '<div class="res"><p>The average price has ' + change + ' since the earliest recorded search on '
+                                 + d.toString() + '.</p></div>';
             d = new Date(items.lastAvg.date);
             if(items.lastAvg.price - items.averagePrice > 0) {
                 change = '<span class="down">decreased</span>';
@@ -112,7 +112,7 @@ function process(items) {
                 change = '<span class="up">increased</span>';
             }
             else change = 'has not changed';
-            results.innerHTML += '<p>The average price has ' + change + ' since the most recent recorded search on '
+            results.innerHTML += '<div class="res"><p>The average price has ' + change + ' since the most recent recorded search on '
                                  + d.toString() + '.</p>';
         }
         
