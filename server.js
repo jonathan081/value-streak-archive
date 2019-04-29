@@ -60,7 +60,7 @@ app.post('/search', (req, res) => {
   var lastAvg = "";
   if (req.body.hasOwnProperty('keywords')) {
     var key = validator.escape(req.body.keywords);
-    url += "&keywords=" + key
+    url += "&keywords=" + key;
     http.get(url, (httpRes) => {
       httpRes.on('data', function(d){
         eBayData += d;
