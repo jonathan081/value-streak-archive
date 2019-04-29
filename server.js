@@ -108,7 +108,7 @@ app.post('/search', (req, res) => {
               };
 
           res.send(toSend);
-
+/*
           db.collection('games', (err, coll) => {
             coll.findOne({'title': key}, (err, old) => {
               var toUpdate = {
@@ -141,7 +141,7 @@ app.post('/search', (req, res) => {
               }
             });
             
-          });
+          });*/
 
         } else
           res.send({"error" : "Something is wrong with the data"});
