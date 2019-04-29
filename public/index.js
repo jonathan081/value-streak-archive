@@ -78,7 +78,8 @@ function process(items) {
     if(items.hasOwnProperty('minPrice') && items.hasOwnProperty('minPriceDate')
         && items.hasOwnProperty('minTitle') && items.hasOwnProperty('minImage')
         && items.hasOwnProperty('maxPrice') && items.hasOwnProperty('maxPriceDate')
-        && items.hasOwnProperty('maxTitle') && items.hasOwnProperty('averagePrice')) {
+        && items.hasOwnProperty('maxTitle') && items.hasOwnProperty('averagePrice')
+        && items.hasOwnProperty('oldestAvg') && items.hasOwnProperty('lastAvg')) {
 
         var minPriceDate = new Date(items.minPriceDate);
         var maxPriceDate = new Date(items.maxPriceDate);
@@ -91,6 +92,27 @@ function process(items) {
                              + '<br>For<br> "' + items.maxTitle
                              + '"<br>On<br> ' + maxPriceDate.toString() + '.</p></div>';
         results.innerHTML += '<div id=\"avg\"><p>The average price was: $' + items.averagePrice.toFixed(2) + '.</p></div>';
+        if(items.oldestAvg != '' && items.lastAvg != '') {
+            var change = '';
+            if(items.oldestAvg.price - items.averagePrice > 0) {
+                change = 'decreased';
+            }
+            else if(items.oldestAvg.price - items.averagePrice < 0) {
+                change = 'increased';
+            }
+            else change = 'has not changed';
+            results.innerHTML += '<p>The average price has ' + change + ' since the earliest recorded search on '
+                                 + items.oldestAvg.date.toString() + '.</p>';
+            if(items.lastAvg.price - items.averagePrice > 0) {
+                change = 'decreased';
+            }
+            else if(items.lastAvg.price - items.averagePrice < 0) {
+                change = 'increased';
+            }
+            else change = 'has not changed';
+            results.innerHTML += '<p>The average price has ' + change + ' since the most recent recorded search on '
+                                 + items.lastAvg.date.toString() + '.</p>';
+        }
         
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(function() { drawChart(items.prices); });
