@@ -62,6 +62,7 @@ function search() {
     if(plat != '') plat = '+' + plat;
     results.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
     keywords = gameName.replace(" ", "+") + plat;
+    keywords.replace(/'/g,"");
     param += keywords;
     requestData();
 }
