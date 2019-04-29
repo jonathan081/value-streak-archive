@@ -18,7 +18,7 @@ var stats;
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////  User Login System  ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////
-var provider = new firebase.auth.GoogleAuthProvider();
+provider = new firebase.auth.GoogleAuthProvider();
 var btnSignIn = document.getElementById("signinBtn");
 btnSignIn.addEventListener('click', e => {
     var user = firebase.auth().signInWithRedirect(provider);
@@ -32,7 +32,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     }
 });
 
-var btnSignOut = document.getElementById("signout");
+var btnSignOut = document.getElementById("signoutBtn");
 btnSignOut.addEventListener('click', e => {
     firebase.auth().signOut();
 });
