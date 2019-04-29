@@ -11,7 +11,6 @@ const MongoClient = require('mongodb').MongoClient, format = require('util').for
 var db = MongoClient.connect(mongoURI, (err, client) => {
   db = client;
 })
-const collName = 'games';
 
 const app = express();
 
@@ -94,7 +93,7 @@ app.post('/search', (req, res) => {
           averagePrice = total / parsed.length;
           minImage = minImage.replace('http://', 'https://');
 
-          db.collection(collName, (err, coll) => {
+          db.collection('games', (err, coll) => {
             var old = coll.findOne({'title': key});
             var toUpdate = {
               "price": averagePrice,
@@ -107,9 +106,8 @@ app.post('/search', (req, res) => {
             } else {
               coll.insertOne({'title': key, 'oldest': toUpdate, 'last': toUpdate});
             }
-          });
 
-          toSend = {
+            toSend = {
             "minPrice": minPrice,
             "minPriceDate": minPriceDate,
             "minTitle": minTitle,
@@ -123,6 +121,8 @@ app.post('/search', (req, res) => {
             "lastAvg": lastAvg,
           };
           res.send(toSend);
+          });
+
         } else
           res.send({"error" : "Something is wrong with the data"});
       })
