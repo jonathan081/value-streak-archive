@@ -6,6 +6,14 @@ const path = require('path')
 const PORT = Number(process.env.PORT) || 3000
 const EBAY_KEY = process.env.EBAYKEY;
 
+const mongoURI = process.env.MONGODB_URI;
+const MongoClient = require('mongodb').MongoClient, format = require('util').format;
+var db = MongoClient.connect(mongoURI, (err, client) => {
+  if(err) throw err;
+  db = client.db();
+});
+const collName = 'games';
+
 const app = express();
 
 var url = "http://svcs.ebay.com/services/search/FindingService/v1";
@@ -50,6 +58,8 @@ app.post('/search', (req, res) => {
   var minTitle = "";
   var minImage = "";
   var prices = [];
+  var oldestAvg = "";
+  var lastAvg = "";
   if (req.body.hasOwnProperty('keywords')) {
     var key = validator.escape(req.body.keywords);
     url += "&keywords=" + key;
@@ -84,6 +94,22 @@ app.post('/search', (req, res) => {
           }
           averagePrice = total / parsed.length;
           minImage = minImage.replace('http://', 'https://');
+
+          db.collection(collName, (err, coll) => {
+            var old = coll.findOne({'title': key});
+            var toUpdate = {
+              "price": averagePrice,
+              "date": new Date();
+            };
+            if(old) {
+              oldestAvg = old.oldest;
+              lastAvg = old.last;
+              coll.updateOne({'title': key}, {'last': toUpdate});
+            } else {
+              coll.insertOne('title': key, 'oldest': toUpdate, 'last': toUpdate);
+            }
+          });
+
           toSend = {
             "minPrice": minPrice,
             "minPriceDate": minPriceDate,
@@ -94,6 +120,8 @@ app.post('/search', (req, res) => {
             "averagePrice": averagePrice,
             "minImage": minImage,
             "prices": prices,
+            "oldestAvg": oldestAvg,
+            "lastAvg": lastAvg,
           };
           res.send(toSend);
         } else
