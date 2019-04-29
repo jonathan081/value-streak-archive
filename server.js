@@ -99,7 +99,7 @@ app.post('/search', (req, res) => {
             var old = coll.findOne({'title': key});
             var toUpdate = {
               "price": averagePrice,
-              "date": new Date();
+              "date": new Date(),
             };
             if(old) {
               oldestAvg = old.oldest;

@@ -1,0 +1,20 @@
+body {
+    font-family: "Arial Black", Gadget, sans-serif;
+    color: black;
+    font-size: 16px;
+    text-align: center;
+}
+
+a:link, a:visited {
+    background-color: black;
+    color: white;
+    padding: 14px 25px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:hover, a:active {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
