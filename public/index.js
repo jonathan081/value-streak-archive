@@ -61,8 +61,8 @@ function search() {
     plat = platform.options[platform.selectedIndex].value;
     if(plat != '') plat = '+' + plat;
     results.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
-    gameName = gameName.replace(/[';:]/g, '');
-    keywords = gameName + plat;
+    keywords = gameName.replace(/[';:!$#&^@,/\\`{}*\[\]()]/g, '');
+    keywords += plat;
     keywords = encodeURIComponent(keywords);
     param += keywords;
     requestData();
