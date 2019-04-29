@@ -9,7 +9,7 @@ const EBAY_KEY = process.env.EBAYKEY;
 const mongoURI = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient, format = require('util').format;
 var db = MongoClient.connect(mongoURI, (err, client) => {
-  db = client;
+  if(!err) db = client;
 })
 
 const app = express();
@@ -94,35 +94,37 @@ app.post('/search', (req, res) => {
           minImage = minImage.replace('http://', 'https://');
 
           db.collection('games', (err, coll) => {
-            var old = coll.findOne({'title': key});
-            var toUpdate = {
-              "price": averagePrice,
-              "date": new Date(),
-            };
+            coll.findOne({'title': key}, (err, old) => {
+                var toUpdate = {
+                "price": averagePrice,
+                "date": new Date(),
+              };
 
-            toSend = {
-            "minPrice": minPrice,
-            "minPriceDate": minPriceDate,
-            "minTitle": minTitle,
-            "maxPrice": maxPrice,
-            "maxPriceDate": maxPriceDate,
-            "maxTitle": maxTitle,
-            "averagePrice": averagePrice,
-            "minImage": minImage,
-            "prices": prices,
-            "oldestAvg": oldestAvg,
-            "lastAvg": lastAvg,
-            };
+              toSend = {
+                "minPrice": minPrice,
+                "minPriceDate": minPriceDate,
+                "minTitle": minTitle,
+                "maxPrice": maxPrice,
+                "maxPriceDate": maxPriceDate,
+                "maxTitle": maxTitle,
+                "averagePrice": averagePrice,
+                "minImage": minImage,
+                "prices": prices,
+                "oldestAvg": oldestAvg,
+                "lastAvg": lastAvg,
+              };
 
-            if(old.hasOwnProperty('last') && old.hasOwnProperty('oldest')) {
-              toSend.oldestAvg = old.oldest;
-              toSend.lastAvg = old.last;
-              coll.updateOne({'title': key}, {$set: {'last': toUpdate}});
-              res.send(toSend);
-            } else {
-              coll.insertOne({'title': key, 'oldest': toUpdate, 'last': toUpdate});
-              res.send(toSend);
-            }
+              if(old.hasOwnProperty('last') && old.hasOwnProperty('oldest')) {
+                toSend.oldestAvg = old.oldest;
+                toSend.lastAvg = old.last;
+                coll.updateOne({'title': key}, {$set: {'last': toUpdate}});
+                res.send(toSend);
+              } else {
+                coll.insertOne({'title': key, 'oldest': toUpdate, 'last': toUpdate});
+                res.send(toSend);
+              }
+            });
+            
           });
 
         } else
