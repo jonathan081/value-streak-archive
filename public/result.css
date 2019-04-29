@@ -49,14 +49,33 @@ li.navibar_item a:hover {
     font-size: 16px;
     text-decoration: none;
     font-family: "Arial Black", Gadget, sans-serif;
-    margin-left: 1400px;
+    margin-left: 1180px;
     text-align: center;
     background-color: black;
     border: none;
     color: white;
     cursor: pointer;
+    display: inline-block;
 }
+
 #signinBtn:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+#signoutBtn{
+    font-size: 16px;
+    text-decoration: none;
+    font-family: "Arial Black", Gadget, sans-serif;
+    margin-left: 1180px;
+    text-align: center;
+    background-color: black;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: none;
+}
+
+#signoutBtn:hover{
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 #chart_div {
