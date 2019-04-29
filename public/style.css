@@ -107,10 +107,6 @@ and (min-width: 300px) {
 
     #chart_div {
         width: 300px;
-        height: auto;
-        border: 10px;
-        padding: 10px;
-        margin: auto;
     }
 }
 
@@ -139,9 +135,5 @@ and (min-width: 768px) {
 
     #chart_div {
         width: 740px;
-        height: auto;
-        border: 10px;
-        padding: 10px;
-        margin: auto;
     }
 }
