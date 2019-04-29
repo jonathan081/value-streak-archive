@@ -90,6 +90,7 @@ app.post('/search', (req, res) => {
             }
             total += price;
           }
+          console.log(maxTitle);
           averagePrice = total / parsed.length;
           minImage = minImage.replace('http://', 'https://');
 
@@ -118,9 +119,11 @@ app.post('/search', (req, res) => {
                 toSend.oldestAvg = old.oldest;
                 toSend.lastAvg = old.last;
                 coll.updateOne({'title': key}, {$set: {'last': toUpdate}});
+                console.log(toSend.maxTitle);
                 res.send(toSend);
               } else {
                 coll.insertOne({'title': key, 'oldest': toUpdate, 'last': toUpdate});
+                console.log(toSend.maxTitle);
                 res.send(toSend);
               }
             });
