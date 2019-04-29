@@ -4,9 +4,9 @@ var request = new XMLHttpRequest();
 var searchBar = document.getElementById("searchBar");
 var gameName = "";
 var plat = "";
-var waiting = document.getElementById("waiting");
 var results = document.getElementById("results");
 var platform = document.getElementById('platform');
+var style = document.getElementById('style');
 var returned_data;
 var returned_items;
 var server = "https://value-streak.herokuapp.com/search";
@@ -19,7 +19,7 @@ var stats;
 ////////////////////////////  User Login System  ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 var provider = new firebase.auth.GoogleAuthProvider();
-var btnSignIn = document.getElementById("signin");
+var btnSignIn = document.getElementById("signinBtn");
 btnSignIn.addEventListener('click', e => {
     var user = firebase.auth().signInWithRedirect(provider);
 });
@@ -51,7 +51,7 @@ function search() {
     gameName = gameName.replace('<', '').replace('>', '');
     plat = platform.options[platform.selectedIndex].value;
     if(plat != '') plat = '+' + plat;
-    waiting.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
+    results.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
     keywords = gameName.replace(" ", "+") + plat;
     param += keywords;
     requestData();
@@ -83,6 +83,7 @@ function process(items) {
 
         var minPriceDate = new Date(items.minPriceDate);
         var maxPriceDate = new Date(items.maxPriceDate);
+        style.setAttribute('href', 'result.css');
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
         results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
         results.innerHTML += '<div id=\"min\"><p>The lowest price was: $' + items.minPrice.toFixed(2)
@@ -99,11 +100,6 @@ function process(items) {
     else results.innerHTML = '<h3>Sorry, no items matched your search.</h3>';
 }
        
-        
-        
-
-       
-
 function drawChart(prices) {
 
     var data = new google.visualization.DataTable();

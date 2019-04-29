@@ -6,7 +6,7 @@
     <title>ValueStreak</title>
     <link rel="icon" href="favicon.ico" />
     <link rel="shortcut icon" href="favicon.ico" />
-    <link type="text/css" rel="stylesheet" href="style.css" />
+    <link id="style" type="text/css" rel="stylesheet" href="index.css" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 </head>
@@ -19,7 +19,7 @@
     </ul>
     <div class="index">
         <a id=logo href="index.html">ValueStreak</a>
-    </div>
+    
 
     <form onsubmit="search(); return false">
         <input type="text" id="searchBar" placeholder="Enter the name of a game to search for." />
@@ -47,10 +47,29 @@
         </select>
         <input type="submit" value="Search" id="searchButton">
     </form>
-
-    <div id="waiting">
     </div>
+
+    <div id="results"></div>
     <script src="index.js"></script>
+    <div id="chart_div"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyB7qOF0mXfArtPxVSS1TGiM_65yz1aenoU",
+            authDomain: "value-streak.firebaseapp.com",
+            databaseURL: "https://value-streak.firebaseio.com",
+            projectId: "value-streak",
+            storageBucket: "value-streak.appspot.com",
+            messagingSenderId: "480838906989"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="index.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </body>
 
 </html>
