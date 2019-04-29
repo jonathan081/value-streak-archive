@@ -66,6 +66,7 @@ app.post('/search', (req, res) => {
         eBayData += d;
       });
       httpRes.on('end', () => {
+        console.log('1');
         var parsed = JSON.parse(eBayData);
         if(parsed.findCompletedItemsResponse[0].searchResult[0].item != undefined) {
           parsed = parsed.findCompletedItemsResponse[0].searchResult[0].item;
@@ -89,28 +90,15 @@ app.post('/search', (req, res) => {
               maxTitle = parsed[i].title[0];
             }
             total += price;
+            console.log('2');
           }
           averagePrice = total / parsed.length;
           minImage = minImage.replace('http://', 'https://');
+          console.log('3');
 
-          toSend = {
-                "minPrice": minPrice,
-                "minPriceDate": minPriceDate,
-                "minTitle": minTitle,
-                "maxPrice": maxPrice,
-                "maxPriceDate": maxPriceDate,
-                "maxTitle": maxTitle,
-                "averagePrice": averagePrice,
-                "minImage": minImage,
-                "prices": prices,
-                "oldestAvg": oldestAvg,
-                "lastAvg": lastAvg,
-              };
-
-          res.send(toSend);
-/*
           db.collection('games', (err, coll) => {
             coll.findOne({'title': key}, (err, old) => {
+              console.log('4');
               var toUpdate = {
                 "price": averagePrice,
                 "date": new Date(),
@@ -130,6 +118,9 @@ app.post('/search', (req, res) => {
                 "lastAvg": lastAvg,
               };
 
+              console.lg('5');
+              console.log(old);
+
               if(old != null) {
                 toSend.oldestAvg = old.oldest;
                 toSend.lastAvg = old.last;
@@ -141,7 +132,7 @@ app.post('/search', (req, res) => {
               }
             });
             
-          });*/
+          });
 
         } else
           res.send({"error" : "Something is wrong with the data"});
