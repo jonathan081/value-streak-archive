@@ -22,7 +22,7 @@ var stats;
 
 provider = new firebase.auth.GoogleAuthProvider();
 var btnSignIn = document.getElementById("signinBtn");
-var btnSignOut = document.getElementById("signoutBtn");
+var btnSignOut = document.getElementById("signoutBtn")
 
 btnSignIn.addEventListener('click', e => {
     var user = firebase.auth().signInWithRedirect(provider);
