@@ -7,7 +7,7 @@ body {
 }
 
 .index {
-    font-size: 30px;
+    font-size: 40px;
 }
 
 .index a{
@@ -32,7 +32,7 @@ li.navibar_item a{
 	color: black;
 	text-decoration: none;
 	text-align: center;
-	font-size: 24px;
+	font-size: 18px;
 }
 
 li.navibar_item {
@@ -49,10 +49,11 @@ li.navibar_button {
     float: right;
     position: relative;
     right: 1%;
+    margin-bottom: 5px;
 }
 
 #signinBtn{
-    font-size: 24px;
+    font-size: 18px;
     text-decoration: none;
     font-family: "Arial Black", Gadget, sans-serif;
     text-align: center;
@@ -69,7 +70,7 @@ li.navibar_button {
 }
 
 #signoutBtn{
-    font-size: 24px;
+    font-size: 18px;
     text-decoration: none;
     font-family: "Arial Black", Gadget, sans-serif;
     text-align: center;
@@ -192,15 +193,6 @@ and (min-width: 300px) {
 
     li.navibar_item a{
         padding: 4px;
-        font-size: 18px;
-    }
-
-    #signinBtn{
-        font-size: 18px;
-    }
-    
-    #signoutBtn{
-        font-size: 18px;
     }
 }
 
@@ -233,5 +225,23 @@ and (min-width: 768px) {
         border: 10px;
         padding: 10px;
         margin: auto;
+    }
+
+    li.navibar_item {
+        font-size: 24px;
+        left: 1%;
+    }
+
+    #signinBtn{
+        font-size: 24px;
+    }
+    
+    #signoutBtn{
+        font-size: 24px;
+    }
+
+    li.navibar_item a{
+        padding: 8px;
+        font-size: 24px;
     }
 }
