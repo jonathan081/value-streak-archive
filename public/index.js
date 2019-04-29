@@ -149,8 +149,6 @@ function drawChart(prices) {
           title: 'Price History of ' + gameName,
           curveType: 'function',
           colors: ['#000000'],
-          //'width': 800,
-          //'height': 500,
           vAxis: {viewWindow: { min: 0}}
         };
     chart.draw(data, options);
