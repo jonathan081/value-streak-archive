@@ -1,0 +1,139 @@
+body {
+    font-family: "Arial Black", Gadget, sans-serif;
+    color: black;
+    font-size: 16px;
+    text-align: center;
+}
+
+a:link, a:visited {
+    background-color: black;
+    color: white;
+    padding: 14px 25px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:hover, a:active {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+.up {
+    color: red;
+    font-weight: bold;
+}
+
+.down {
+    color: blue;
+    font-weight: bold;
+}
+
+#chart_div {
+    width: 250px;
+    height: auto;
+    border: 10px;
+    padding: 10px;
+    margin: auto;
+}
+
+.res {
+    margin: 0 25px 30px;
+}
+
+#results img {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    width: 150px;
+}
+
+#searchBar {
+    font-family: "Arial Black", Gadget, sans-serif;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid black;
+    width: 90%;
+    background: white;
+    margin-bottom: 10px;
+}
+
+#platform {
+    font-family: "Arial Black", Gadget, sans-serif;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background: black;
+    border: 1px solid black;
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+#searchButton {
+    font-family: "Arial Black", Gadget, sans-serif;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: black;
+    border: 1px solid black;
+    width: 90%;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+@media only screen
+and (min-width: 300px) {
+
+    #searchBar {
+        width: 90%;
+    }
+
+    #platform {
+        width: 45%;
+    }
+
+    #searchButton {
+        width: 45%;
+    }
+
+    .res {
+        width: 300px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #chart_div {
+        width: 300px;
+    }
+}
+
+@media only screen
+and (min-width: 768px) {
+
+    #searchBar {
+        width: 60%;
+    }
+
+    #platform {
+        width: 15%;
+    }
+
+    #searchButton {
+        width: 15%;
+    }
+
+    .res {
+        width: 700px;
+        height: auto;
+        border: 10px;
+        padding: 10px;
+        margin: auto;
+    }
+
+    #chart_div {
+        width: 740px;
+    }
+}

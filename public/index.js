@@ -6,24 +6,18 @@ var gameName = "";
 var plat = "";
 var results = document.getElementById("results");
 var platform = document.getElementById('platform');
-var style = document.getElementById('style');
 var returned_data;
 var returned_items;
 var server = "https://value-streak.herokuapp.com/search";
 var param = "keywords=";
 var data;
-var stats;
 
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////  User Login System  ///////////////////////////
 ////////////////////////////////////////////////////////////////////////////
-// Initialize Firebase
-
-provider = new firebase.auth.GoogleAuthProvider();
-var btnSignIn = document.getElementById("signinBtn");
-var btnSignOut = document.getElementById("signoutBtn");
-
+var provider = new firebase.auth.GoogleAuthProvider();
+var btnSignIn = document.getElementById("signin");
 btnSignIn.addEventListener('click', e => {
     var user = firebase.auth().signInWithRedirect(provider);
 });
@@ -31,19 +25,14 @@ btnSignIn.addEventListener('click', e => {
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
         console.log(firebaseUser.uid);
-        btnSignIn.style.display="none";
-        btnSignOut.style.display="inline-block";
-
     } else {
         console.log('not logged in');
     }
 });
 
-
+var btnSignOut = document.getElementById("signout");
 btnSignOut.addEventListener('click', e => {
     firebase.auth().signOut();
-    btnSignIn.style.display="inline-block";
-    btnSignOut.style.display="none";
 });
 
 
@@ -63,6 +52,7 @@ function search() {
     results.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
     keywords = gameName.replace(" ", "+") + plat;
     param += keywords;
+
     requestData();
 }
 
@@ -93,7 +83,6 @@ function process(items) {
 
         var minPriceDate = new Date(items.minPriceDate);
         var maxPriceDate = new Date(items.maxPriceDate);
-        style.setAttribute('href', 'result.css');
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
         results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
         results.innerHTML += '<div class="res"><p>The lowest price was: $' + items.minPrice.toFixed(2)
@@ -133,6 +122,11 @@ function process(items) {
     else results.innerHTML = '<h3>Sorry, no items matched your search.</h3>';
 }
        
+        
+        
+
+       
+
 function drawChart(prices) {
 
     var data = new google.visualization.DataTable();
