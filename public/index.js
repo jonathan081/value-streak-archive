@@ -57,11 +57,13 @@ btnSignOut.addEventListener('click', e => {
 function search() {
     param = "keywords=";
     gameName = searchBar.value;
-    gameName = gameName.replace(/</g, '').replace(/>/g, '');
+    gameName = gameName.replace(/[<>]/g, '');
     plat = platform.options[platform.selectedIndex].value;
     if(plat != '') plat = '+' + plat;
     results.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
-    keywords = encodeURIComponent(gameName) + plat;
+    keywords = gameName.replace(/[';:!$#&^@,/\\`{}*\[\]()]/g, '');
+    keywords += plat;
+    keywords = encodeURIComponent(keywords);
     param += keywords;
     requestData();
 }
