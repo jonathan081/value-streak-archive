@@ -7,7 +7,7 @@ body {
 }
 
 .index {
-    font-size: 64px;
+    font-size: 40px;
 }
 
 .index a{
@@ -32,7 +32,7 @@ li.navibar_item a{
 	color: black;
 	text-decoration: none;
 	text-align: center;
-	font-size: 24px;
+	font-size: 18px;
 }
 
 li.navibar_item {
@@ -45,11 +45,17 @@ li.navibar_item a:hover {
 	color: red
 }
 
+li.navibar_button {
+    float: right;
+    position: relative;
+    right: 1%;
+    margin-bottom: 5px;
+}
+
 #signinBtn{
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: none;
     font-family: "Arial Black", Gadget, sans-serif;
-    margin-left: 1180px;
     text-align: center;
     background-color: black;
     border: none;
@@ -59,14 +65,14 @@ li.navibar_item a:hover {
 }
 
 #signinBtn:hover{
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    background-color: white;
+    color:black;
 }
 
 #signoutBtn{
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: none;
     font-family: "Arial Black", Gadget, sans-serif;
-    margin-left: 1180px;
     text-align: center;
     background-color: black;
     border: none;
@@ -77,7 +83,8 @@ li.navibar_item a:hover {
 
 
 #signoutBtn:hover{
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    background-color: white;
+    color:black;
 }
 
 
@@ -154,6 +161,16 @@ li.navibar_item a:hover {
     cursor: pointer;
 }
 
+#about {
+	color: black;
+	text-decoration: none;
+	text-align: center;
+	font-size: 18px;
+}
+
+#about:hover{
+    text-decoration: underline;
+}
 @media only screen
 and (min-width: 300px) {
 
@@ -200,10 +217,18 @@ and (min-width: 300px) {
         padding: 10px;
         margin: auto;
     }
+
+    li.navibar_item a{
+        padding: 4px;
+    }
+
 }
 
 @media only screen
 and (min-width: 768px) {
+    .index {
+        font-size: 64px;
+    }
 
     #searchBar {
         width: 60%;
@@ -247,5 +272,23 @@ and (min-width: 768px) {
         border: 10px;
         padding: 10px;
         margin: auto;
+    }
+
+    li.navibar_item {
+        font-size: 24px;
+        left: 1%;
+    }
+
+    #signinBtn{
+        font-size: 24px;
+    }
+    
+    #signoutBtn{
+        font-size: 24px;
+    }
+
+    li.navibar_item a{
+        padding: 8px;
+        font-size: 24px;
     }
 }

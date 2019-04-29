@@ -57,11 +57,11 @@ btnSignOut.addEventListener('click', e => {
 function search() {
     param = "keywords=";
     gameName = searchBar.value;
-    gameName = gameName.replace('<', '').replace('>', '');
+    gameName = gameName.replace(/</g, '').replace(/>/g, '');
     plat = platform.options[platform.selectedIndex].value;
     if(plat != '') plat = '+' + plat;
     results.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
-    keywords = gameName.replace(" ", "+") + plat;
+    keywords = encodeURIComponent(gameName) + plat;
     param += keywords;
     requestData();
 }
@@ -148,8 +148,6 @@ function drawChart(prices) {
           title: 'Price History of ' + gameName,
           curveType: 'function',
           colors: ['#000000'],
-          //'width': 800,
-          //'height': 500,
           vAxis: {viewWindow: { min: 0}}
         };
     chart.draw(data, options);
