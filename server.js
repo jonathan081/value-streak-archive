@@ -59,7 +59,6 @@ app.post('/search', (req, res) => {
   var oldestAvg = "";
   var lastAvg = "";
   if (req.body.hasOwnProperty('keywords')) {
-    var key = validator.escape(req.body.keywords);
     url += "&keywords=" + key;
     http.get(url, (httpRes) => {
       httpRes.on('data', function(d){
