@@ -12,21 +12,17 @@
 </head>
 
 <body>
-    <div class="logo">
-        <h1>ValueStreak</h1>
+    <ul class="navibar">
+        <li class="navibar_item"> <a href="index.html"> Home</a> </li>
+        <li class="navibar_item"> <a href="about.html"> About</a> </li>
+        <li class="navibar_item"> <button id="signinBtn">Sign in here</button></li>
+    </ul>
+    <div class="index">
+        <a id=logo href="index.html">ValueStreak</a>
     </div>
-
-    <div id="signin">
-        <button id="signinBtn">Sign in here</button>
-    </div>
-
-    <div id="signout">
-        <button id="signoutBtn">Sign out here</button>
-    </div>
-
 
     <form class="search" onsubmit="search(); return false">
-        <input type="text" id="searchBar" placeholder="Search for a game." />
+        <input type="text" id="searchBar" placeholder="Enter the name of a game to search for." />
         <select id='platform'>
             <option value='' selected='selected'>Select platform</option>
             <option value='Switch'>Nintendo Switch</option>
@@ -52,32 +48,8 @@
         <input type="submit" value="Search" id="searchButton">
     </form>
 
-    <div id="results">
-    </div>
-
-    <div id="chart_div"></div>
-
-    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
-    <script>
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyB7qOF0mXfArtPxVSS1TGiM_65yz1aenoU",
-            authDomain: "value-streak.firebaseapp.com",
-            databaseURL: "https://value-streak.firebaseio.com",
-            projectId: "value-streak",
-            storageBucket: "value-streak.appspot.com",
-            messagingSenderId: "480838906989"
-        };
-        firebase.initializeApp(config);
-    </script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="index.js">
-    </script>
-
-     
-
+    <div id="searching"></div>
+    <script src="index.js"></script>
 </body>
 
 </html>
