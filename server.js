@@ -114,7 +114,7 @@ app.post('/search', (req, res) => {
             "lastAvg": lastAvg,
             };
 
-            if(old) {
+            if(old.hasOwnProperty('last') && old.hasOwnProperty('oldest')) {
               toSend.oldestAvg = old.oldest;
               toSend.lastAvg = old.last;
               coll.updateOne({'title': key}, {$set: {'last': toUpdate}});
