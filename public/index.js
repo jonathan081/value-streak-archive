@@ -4,7 +4,7 @@ var request = new XMLHttpRequest();
 var searchBar = document.getElementById("searchBar");
 var gameName = "";
 var plat = "";
-var searching = document.getElementById("searching");
+var waiting = document.getElementById("waiting");
 var results = document.getElementById("results");
 var platform = document.getElementById('platform');
 var returned_data;
@@ -51,10 +51,9 @@ function search() {
     gameName = gameName.replace('<', '').replace('>', '');
     plat = platform.options[platform.selectedIndex].value;
     if(plat != '') plat = '+' + plat;
-    searching.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
+    waiting.innerHTML = "<p>Searching eBay for " + gameName + "...</p>";
     keywords = gameName.replace(" ", "+") + plat;
     param += keywords;
-
     requestData();
 }
 
@@ -84,7 +83,6 @@ function process(items) {
 
         var minPriceDate = new Date(items.minPriceDate);
         var maxPriceDate = new Date(items.maxPriceDate);
-        window.location.replace("result.html");
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
         results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
         results.innerHTML += '<div id=\"min\"><p>The lowest price was: $' + items.minPrice.toFixed(2)
