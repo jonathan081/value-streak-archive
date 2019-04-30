@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const validator = require ('validator')
+const expressSanitizer = require('express-sanitizer');
 const http = require('http')
 const path = require('path')
 const PORT = Number(process.env.PORT) || 3000
