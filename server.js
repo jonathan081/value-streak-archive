@@ -13,7 +13,7 @@ var db = MongoClient.connect(mongoURI, (err, client) => {
   //if(!err) db = client;
   if(!err) {
     db = client.db(process.env.DB_NAME);
-    db.connect(process.env.DB_NAME, process.env.DB_PW);
+    db.authenticate(process.env.DB_NAME, process.env.DB_PW);
   }
 })
 
