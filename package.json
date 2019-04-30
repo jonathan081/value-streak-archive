@@ -14,7 +14,8 @@
     "ejs": "^2.5.6",
     "express": "^4.16.4",
     "mongodb": "^2.2.33",
-    "validator": "latest"
+    "validator": "latest",
+    "sanitize": "latest"
   },
   "devDependencies": {
     "request": "^2.81.0",

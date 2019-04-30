@@ -43,7 +43,7 @@ app.use((req, res, next) => {
   next();
 })
 
-app.post('/search', (req, res) => {
+app.post('/search', [check('keywords')], (req, res) => {
   var eBayData = "";
   var toSend;
   var minPrice = 1000.0;
@@ -143,5 +143,6 @@ app.use((req, res, next) => {
     }
 });
 app.use(express.static("public"));
+app.use(require('sanitize').middleware);
 
 app.listen(PORT, (err)=> console.log("Listening on port " + PORT));
