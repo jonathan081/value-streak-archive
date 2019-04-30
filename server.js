@@ -9,12 +9,8 @@ const EBAY_KEY = process.env.EBAYKEY;
 
 const mongoURI = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient, format = require('util').format;
-var db = MongoClient.connect(mongoURI, (err, client) => {
-  //if(!err) db = client;
-  if(!err) {
+var db = MongoClient.connect(mongoURI, {useNewUrlParser: true}, (err, client) => {
     db = client.db(process.env.DB_NAME);
-    db.authenticate(process.env.DB_NAME, process.env.DB_PW);
-  }
 })
 
 const app = express();
@@ -140,6 +136,31 @@ app.post('/search', (req, res) => {
   } else 
     res.send({"error" : "Something is wrong with the data"});
 });
+
+
+app.post('/vault', (req, res) => {
+  if (req.body.hasOwnProperty('user')) {
+    db.collection('vault', (err, coll) => {
+      coll.find({'user': req.body.user}).toArray((err, result) => {
+          res.send({result});
+      });
+      
+    });
+  } else {
+    res.send({"error" : "The vault is not open today."});
+  }
+});
+
+app.post('/enVault', (req, res) => {
+  if ((req.body.hasOwnProperty('game')) && (req.body.hasOwnProperty('user')) && (req.body.hasOwnProperty('price'))) {
+    res.send({"success" : "Game enVaulted"});
+    db.collection('vault', (err, coll) => {
+      coll.insertOne({'user': req.body.user, 'game': req.body.game, 'price': req.body.price}); 
+    });
+  }
+  res.send({"error" : "The vault is not open today."})
+});
+
 
 app.use((req, res, next) => {
     if(req.header('x-forwarded-proto') !== 'https') {

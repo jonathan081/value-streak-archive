@@ -1,18 +1,22 @@
 // javascript for ValueStreak index.html
 
 var request = new XMLHttpRequest();
+var enVaultRequest = new XMLHttpRequest();
+var vaultServer = "https://value-streak.herokuapp.com/enVault";
 var searchBar = document.getElementById("searchBar");
 var gameName = "";
 var plat = "";
 var results = document.getElementById("results");
 var platform = document.getElementById('platform');
 var style = document.getElementById('style');
+var addToVault = document.getElementById('AddToVault');
 var returned_data;
 var returned_items;
 var server = "https://value-streak.herokuapp.com/search";
 var param = "keywords=";
 var data;
 var stats;
+var user;
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -30,25 +34,58 @@ btnSignIn.addEventListener('click', e => {
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
-        console.log(firebaseUser.uid);
+        addToVault.addEventListener('click', e => {
+            enVault();
+            addToVault.innerHTML = "<h4>Game added to Vault.</h4>";
+        });
+        user = getCookie("username");
+        if (user != "") {
+          alert("Welcome again " + user);
+        } else {
+          user = firebaseUser.uid;
+          if (user != "" && user != null) {
+            setCookie("username", user);
+            alert("Welcome " + user + "! We use cookies to give you the best, most relevant experience.")
+            alert("That's a disclaimer, here's a better one. We use one cookie so we still know who you are when you got redirected. When you sign out or close the browser, cookie's gone.")
+          }
+        }
+
         btnSignIn.style.display="none";
         btnSignOut.style.display="inline-block";
-
     } else {
-        console.log('not logged in');
+        document.cookie.username = "";
     }
 });
-
 
 btnSignOut.addEventListener('click', e => {
     firebase.auth().signOut();
     btnSignIn.style.display="inline-block";
     btnSignOut.style.display="none";
+    setCookie("username", "");
+    addToVault.removeEventListener('click', e);
+    location.reload();
 });
 
 
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+}
 
+function setCookie(cname, cvalue) {
+    document.cookie = cname + "=" + cvalue + ";path=/";
+}
 
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////  interaction with server  //////////////////////////
@@ -74,7 +111,6 @@ function requestData() {
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200){
             data = JSON.parse(request.responseText);
-            console.log(data);
             process(data);
         }
     }
@@ -96,6 +132,9 @@ function process(items) {
         var minPriceDate = new Date(items.minPriceDate);
         var maxPriceDate = new Date(items.maxPriceDate);
         style.setAttribute('href', 'result.css');
+        if (getCookie("username") != "") {
+            addToVault.innerHTML += '<h4>Click here to add game to Vault.</h4>';
+        }
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
         results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
         results.innerHTML += '<div class="res"><p>The lowest price was: $' + items.minPrice.toFixed(2)
@@ -134,7 +173,20 @@ function process(items) {
     }
     else results.innerHTML = '<h3>Sorry, no items matched your search.</h3>';
 }
-       
+
+function enVault() {
+    enVaultRequest.open('POST', vaultServer, true);
+    enVaultRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    enVaultRequest.onreadystatechange = function() {
+        if (enVaultRequest.readyState == 4 && enVaultRequest.status == 200){
+            vwef = JSON.parse(enVaultRequest.responseText);
+            console.log(vwef);
+        }
+    }
+    enVaultRequest.send("user=" + user + "&game=" + gameName + "&price=" + data.averagePrice.toFixed(2));
+}
+
+
 function drawChart(prices) {
 
     var data = new google.visualization.DataTable();
