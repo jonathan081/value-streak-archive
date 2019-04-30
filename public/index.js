@@ -103,7 +103,6 @@ function requestData() {
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200){
             data = JSON.parse(request.responseText);
-            console.log(data);
             process(data);
         }
     }

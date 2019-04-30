@@ -137,6 +137,11 @@ app.post('/search', (req, res) => {
     res.send({"error" : "Something is wrong with the data"});
 });
 
+
+app.post('/vault', (req, res) => {
+  res.send({"error" : "The vault is not open."})
+});
+
 app.use((req, res, next) => {
     if(req.header('x-forwarded-proto') !== 'https') {
         res.redirect(`https://${req.header('host')}${req.url}`);
