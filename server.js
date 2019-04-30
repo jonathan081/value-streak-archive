@@ -139,8 +139,12 @@ app.post('/search', (req, res) => {
 
 
 app.post('/vault', (req, res) => {
+  if (req.body.hasOwnProperty('user')) {
+    res.send({"user" : req.body.user });
+  }
   res.send({"error" : "The vault is not open."})
 });
+
 
 app.use((req, res, next) => {
     if(req.header('x-forwarded-proto') !== 'https') {

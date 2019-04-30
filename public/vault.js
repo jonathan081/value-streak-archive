@@ -28,7 +28,7 @@ function requestVaultData() {
             console.log(data);
         }
     }
-    request.send("asb");
+    request.send(user);
 }
 
 

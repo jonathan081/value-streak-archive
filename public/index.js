@@ -40,7 +40,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
           if (user != "" && user != null) {
             setCookie("username", user);
             alert("Welcome " + user + "! We use cookies to give you the best, most relevant experience.")
-            alert("F**k that. We use one cookie so we still know who you are when you got redirected. When you sign out or close the browser, cookie's gone.")
+            alert("That's a disclaimer, here's a better one. We use one cookie so we still know who you are when you got redirected. When you sign out or close the browser, cookie's gone.")
           }
         }
 
