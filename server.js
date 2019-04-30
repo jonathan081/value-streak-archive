@@ -140,6 +140,12 @@ app.post('/search', (req, res) => {
 
 app.post('/vault', (req, res) => {
   if (req.body.hasOwnProperty('user')) {
+    db.collection('vault', (err, coll) => {
+      coll.findOne({'user': req.body.user}, (err, result) => {
+          res.send(result);
+      });
+      
+    });
     res.send({"user" : req.body.user });
   }
   res.send({"error" : "The vault is not open today."})
