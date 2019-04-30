@@ -10,11 +10,7 @@ const EBAY_KEY = process.env.EBAYKEY;
 const mongoURI = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient, format = require('util').format;
 var db = MongoClient.connect(mongoURI, (err, client) => {
-  //if(!err) db = client;
-  if(!err) {
-    db = client.db(process.env.DB_NAME);
-    db.authenticate(process.env.DB_NAME, process.env.DB_PW);
-  }
+  if(!err) db = client;
 })
 
 const app = express();
