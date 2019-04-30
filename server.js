@@ -35,6 +35,8 @@ url += "&" + EBAY_KEY;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(require('sanitize').middleware);
+app.use(expressSanitizer());
 
 app.use((req, res, next) => {
   //res.header("Access-Control-Allow-Origin", "http://value-streak.herokuapp.com");
@@ -43,7 +45,7 @@ app.use((req, res, next) => {
   next();
 })
 
-app.post('/search', [check('keywords')], (req, res) => {
+app.post('/search', (req, res) => {
   var eBayData = "";
   var toSend;
   var minPrice = 1000.0;
@@ -59,7 +61,7 @@ app.post('/search', [check('keywords')], (req, res) => {
   var oldestAvg = "";
   var lastAvg = "";
   if (req.body.hasOwnProperty('keywords')) {
-    var key = validator.escape(req.body.keywords);
+    var key = req.sanitize(req.body.keywords);
     url += "&keywords=" + key;
     http.get(url, (httpRes) => {
       httpRes.on('data', function(d){
@@ -142,7 +144,6 @@ app.use((req, res, next) => {
         next();
     }
 });
-app.use(express.static("public"));
-app.use(require('sanitize').middleware);
 
+app.use(express.static("public"));
 app.listen(PORT, (err)=> console.log("Listening on port " + PORT));
