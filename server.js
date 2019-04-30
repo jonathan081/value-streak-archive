@@ -63,7 +63,7 @@ app.post('/search', (req, res) => {
   if (req.body.hasOwnProperty('keywords')) {
     var key = req.sanitize(req.body.keywords);
     url += "&keywords=" + key;
-    http.get(url, (httpRes) => {
+    http.get(encodeURI(url), (httpRes) => {
       httpRes.on('data', function(d){
         eBayData += d;
       });
