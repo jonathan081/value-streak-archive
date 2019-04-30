@@ -16,8 +16,6 @@
     "mongodb": "^3.2.3",
     "validator": "latest",
     "express-sanitizer": "latest",
-    "mongodb": "^3.2.3",
-    "validator": "latest"
   },
   "devDependencies": {
     "request": "^2.81.0",
