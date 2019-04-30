@@ -10,7 +10,6 @@ var results = document.getElementById("results");
 var platform = document.getElementById('platform');
 var style = document.getElementById('style');
 var addToVault = document.getElementById('AddToVault');
-var addToVaultButton = document.getElementById('AddToVaultButton');
 var returned_data;
 var returned_items;
 var server = "https://value-streak.herokuapp.com/search";
@@ -35,7 +34,7 @@ btnSignIn.addEventListener('click', e => {
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
-        addToVaultButton.addEventListener('click', e => {
+        addToVault.addEventListener('click', e => {
             enVault();
             addToVault.innerHTML = "<h4>Game added to Vault.</h4>";
         });
@@ -134,8 +133,7 @@ function process(items) {
         var maxPriceDate = new Date(items.maxPriceDate);
         style.setAttribute('href', 'result.css');
         if (getCookie("username") != "") {
-            addToVaultButton.innerHTML += '<button>Click here</button>';
-            addToVault.innerHTML += '<h4>to add game to Vault.</h4>';
+            addToVault.innerHTML += '<h4>Click here to add game to Vault.</h4>';
         }
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
         results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
