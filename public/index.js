@@ -1,12 +1,15 @@
 // javascript for ValueStreak index.html
 
 var request = new XMLHttpRequest();
+var enVaultRequest = new XMLHttpRequest();
+var vaultServer = "https://value-streak.herokuapp.com/enVault";
 var searchBar = document.getElementById("searchBar");
 var gameName = "";
 var plat = "";
 var results = document.getElementById("results");
 var platform = document.getElementById('platform');
 var style = document.getElementById('style');
+var addToVault = document.getElementById('AddToVault');
 var returned_data;
 var returned_items;
 var server = "https://value-streak.herokuapp.com/search";
@@ -31,7 +34,10 @@ btnSignIn.addEventListener('click', e => {
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
-        
+        addToVault.addEventListener('click', e => {
+            enVault();
+            addToVault.innerHTML = "<h4>Game added to Vault.</h4>";
+        });
         user = getCookie("username");
         if (user != "") {
           alert("Welcome again " + user);
@@ -56,6 +62,7 @@ btnSignOut.addEventListener('click', e => {
     btnSignIn.style.display="inline-block";
     btnSignOut.style.display="none";
     setCookie("username", "");
+    addToVault.removeEventListener('click', e);
     location.reload();
 });
 
@@ -125,15 +132,11 @@ function process(items) {
         var minPriceDate = new Date(items.minPriceDate);
         var maxPriceDate = new Date(items.maxPriceDate);
         style.setAttribute('href', 'result.css');
+        if (getCookie("username") != "") {
+            addToVault.innerHTML += '<h4>Click here to add game to Vault.</h4>';
+        }
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
         results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
-        if (getCookie("username") != "") {
-            results.innerHTML += '<div id="addToVault"><h4>Click here to add it to your vault.</h4></div>';
-            var addToVault = document.getElementById('AddToVault');
-                addToVault.addEventListener('click', e => {
-                    alarm();
-                });
-        }
         results.innerHTML += '<div class="res"><p>The lowest price was: $' + items.minPrice.toFixed(2)
                              + '<br>For<br> "' + items.minTitle
                              + '"<br>On<br> ' + minPriceDate.toString() + '.</p></div>';
@@ -170,7 +173,20 @@ function process(items) {
     }
     else results.innerHTML = '<h3>Sorry, no items matched your search.</h3>';
 }
-       
+
+function enVault() {
+    enVaultRequest.open('POST', vaultServer, true);
+    enVaultRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    enVaultRequest.onreadystatechange = function() {
+        if (enVaultRequest.readyState == 4 && enVaultRequest.status == 200){
+            vwef = JSON.parse(enVaultRequest.responseText);
+            console.log(vwef);
+        }
+    }
+    enVaultRequest.send("user=" + user + "&game=" + gameName + "&price=" + data.averagePrice.toFixed(2));
+}
+
+
 function drawChart(prices) {
 
     var data = new google.visualization.DataTable();
