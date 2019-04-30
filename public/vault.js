@@ -19,7 +19,6 @@ if (user != "") {
 
 
 function requestVaultData() {
-    console.log("called");
     request.open('POST', vaultServer, true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.onreadystatechange = function() {
@@ -28,7 +27,7 @@ function requestVaultData() {
             console.log(data);
         }
     }
-    request.send(user);
+    request.send("user=" + user);
 }
 
 

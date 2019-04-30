@@ -60,6 +60,7 @@ btnSignOut.addEventListener('click', e => {
 });
 
 
+
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -126,6 +127,13 @@ function process(items) {
         style.setAttribute('href', 'result.css');
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
         results.innerHTML += '<img src="' + items.minImage + '" alt = "Lowest priced item">';
+        if (getCookie("username") != "") {
+            results.innerHTML += '<div id="addToVault"><h4>Click here to add it to your vault.</h4></div>';
+            var addToVault = document.getElementById('AddToVault');
+                addToVault.addEventListener('click', e => {
+                    alarm();
+                });
+        }
         results.innerHTML += '<div class="res"><p>The lowest price was: $' + items.minPrice.toFixed(2)
                              + '<br>For<br> "' + items.minTitle
                              + '"<br>On<br> ' + minPriceDate.toString() + '.</p></div>';
