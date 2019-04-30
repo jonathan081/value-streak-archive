@@ -86,21 +86,8 @@ li.navibar_button {
     color:black;
 }
 
-#AddToVault button{
-    font-size :10px;
-    text-decoration: none;
-    font-family: "Arial Black", Gadget, sans-serif;
-    text-align: center;
-    background-color: black;
-    border: none;
-    color: white;
-    cursor: pointer;
-    display: none;
-}
-
-#AddToVault button{
-    background-color: white;
-    color:black;
+#addToVault:hover{
+    text-decoration: underline;
 }
 
 #about {
