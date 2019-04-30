@@ -30,12 +30,9 @@ btnSignIn.addEventListener('click', e => {
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
-        console.log(firebaseUser.uid);
         btnSignIn.style.display="none";
         btnSignOut.style.display="inline-block";
 
-    } else {
-        console.log('not logged in');
     }
 });
 
@@ -74,7 +71,6 @@ function requestData() {
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200){
             data = JSON.parse(request.responseText);
-            console.log(data);
             process(data);
         }
     }

@@ -1,7 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const validator = require ('validator')
-const expressSanitizer = require('express-sanitizer');
 const http = require('http')
 const path = require('path')
 const PORT = Number(process.env.PORT) || 3000
@@ -10,11 +9,7 @@ const EBAY_KEY = process.env.EBAYKEY;
 const mongoURI = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient, format = require('util').format;
 var db = MongoClient.connect(mongoURI, (err, client) => {
-  //if(!err) db = client;
-  if(!err) {
-    db = client.db(process.env.DB_NAME);
-    db.authenticate(process.env.DB_NAME, process.env.DB_PW);
-  }
+  if(!err) db = client;
 })
 
 const app = express();
@@ -37,14 +32,12 @@ url += "&sortOrder=BestMatch";
 // ebay access key
 url += "&" + EBAY_KEY;
 
-app.use(express.json());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(expressSanitizer());
 
 app.use((req, res, next) => {
-  //res.header("Access-Control-Allow-Origin", "http://value-streak.herokuapp.com");
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "http://value-streak.herokuapp.com");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 })
@@ -65,9 +58,9 @@ app.post('/search', (req, res) => {
   var oldestAvg = "";
   var lastAvg = "";
   if (req.body.hasOwnProperty('keywords')) {
-    var key = req.sanitize(req.body.keywords);
+    var key = validator.escape(req.body.keywords);
     url += "&keywords=" + key;
-    http.get(encodeURI(url), (httpRes) => {
+    http.get(url, (httpRes) => {
       httpRes.on('data', function(d){
         eBayData += d;
       });
@@ -148,6 +141,6 @@ app.use((req, res, next) => {
         next();
     }
 });
-
 app.use(express.static("public"));
+
 app.listen(PORT, (err)=> console.log("Listening on port " + PORT));
