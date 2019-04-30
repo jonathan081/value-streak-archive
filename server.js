@@ -146,8 +146,9 @@ app.post('/vault', (req, res) => {
       });
       
     });
+  } else {
+    res.send({"error" : "The vault is not open today."});
   }
-  res.send({"error" : "The vault is not open today."})
 });
 
 app.post('/enVault', (req, res) => {
