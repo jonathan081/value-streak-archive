@@ -13,6 +13,7 @@ var server = "https://value-streak.herokuapp.com/search";
 var param = "keywords=";
 var data;
 var stats;
+var user;
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -30,25 +31,53 @@ btnSignIn.addEventListener('click', e => {
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
-        console.log(firebaseUser.uid);
+        
+        user = getCookie("username");
+        if (user != "") {
+          alert("Welcome again " + user);
+        } else {
+          user = firebaseUser.uid;
+          if (user != "" && user != null) {
+            setCookie("username", user);
+            alert("Welcome " + user + "! We use cookies to give you the best, most relevant experience.")
+            alert("F**k that. We use one cookie so we still know who you are when you got redirected. When you sign out or close the browser, cookie's gone.")
+          }
+        }
+
         btnSignIn.style.display="none";
         btnSignOut.style.display="inline-block";
-
     } else {
-        console.log('not logged in');
+        document.cookie.username = "";
     }
 });
-
 
 btnSignOut.addEventListener('click', e => {
     firebase.auth().signOut();
     btnSignIn.style.display="inline-block";
     btnSignOut.style.display="none";
+    setCookie("username", "");
+    location.reload();
 });
 
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+}
 
-
+function setCookie(cname, cvalue) {
+    document.cookie = cname + "=" + cvalue + ";path=/";
+}
 
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////  interaction with server  //////////////////////////
