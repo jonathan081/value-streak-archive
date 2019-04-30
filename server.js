@@ -141,9 +141,9 @@ app.post('/search', (req, res) => {
 app.post('/vault', (req, res) => {
   if (req.body.hasOwnProperty('user')) {
     db.collection('vault', (err, coll) => {
-      coll.findOne({'user': req.body.user}, (err, result) => {
+      coll.find({'user': req.body.user}).toArray(err, result) {
           res.send({result});
-      });
+      };
       
     });
   } else {
