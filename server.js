@@ -8,7 +8,7 @@ const EBAY_KEY = process.env.EBAYKEY;
 
 const mongoURI = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient, format = require('util').format;
-var db = MongoClient.connect(mongoURI, (err, client) => {
+var db = MongoClient.connect(mongoURI, {useNewUrlParser: true}, (err, client) => {
   //if(!err) db = client;
   if(!err) {
     db = client.db(process.env.DB_NAME);
