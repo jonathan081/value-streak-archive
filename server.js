@@ -146,7 +146,7 @@ app.post('/vault', (req, res) => {
 });
 
 app.post('/enVault', (req, res) => {
-  if ((req.body.hasOwnProperty('game')) and (req.body.hasOwnProperty('user')) and (req.body.hasOwnProperty('price'))) {
+  if ((req.body.hasOwnProperty('game')) && (req.body.hasOwnProperty('user')) && (req.body.hasOwnProperty('price'))) {
     res.send({"success" : "Game enVaulted"});
     db.collection('vault', (err, coll) => {
       coll.insertOne({'user': req.body.user, 'game': req.body.user, 'price': req.body.user}); 
