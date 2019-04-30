@@ -17,7 +17,6 @@ if (user != "") {
     vault_info.innerHTML = "<p>Go to home page to sign in with Google if you want.</p>";
 }
 
-
 function requestVaultData() {
     request.open('POST', vaultServer, true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -25,6 +24,7 @@ function requestVaultData() {
         if (request.readyState == 4 && request.status == 200){
             data = JSON.parse(request.responseText);
             console.log(data);
+            request.end();
         }
     }
     request.send("user=" + user);
