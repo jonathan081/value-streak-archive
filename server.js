@@ -146,7 +146,6 @@ app.post('/vault', (req, res) => {
       });
       
     });
-    res.send({"user" : req.body.user });
   }
   res.send({"error" : "The vault is not open today."})
 });
