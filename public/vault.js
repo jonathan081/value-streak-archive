@@ -2,7 +2,7 @@ const vault_info = document.getElementById('vault');
 const signin_info = document.getElementById('signin?');
 const vaultServer = "https://value-streak.herokuapp.com/vault";
 var data;
-const request = new XMLHttpRequest();
+var request = new XMLHttpRequest();
 
 
 var user = getCookie("username");
