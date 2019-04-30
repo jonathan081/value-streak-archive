@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const validator = require ('validator')
+const expressSanitizer = require('express-sanitizer');
 const http = require('http')
 const path = require('path')
 const PORT = Number(process.env.PORT) || 3000
@@ -8,8 +9,8 @@ const EBAY_KEY = process.env.EBAYKEY;
 
 const mongoURI = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient, format = require('util').format;
-var db = MongoClient.connect(mongoURI, (err, client) => {
-  if(!err) db = client;
+var db = MongoClient.connect(mongoURI, {useNewUrlParser: true}, (err, client) => {
+    db = client.db(process.env.DB_NAME);
 })
 
 const app = express();
@@ -32,9 +33,10 @@ url += "&sortOrder=BestMatch";
 // ebay access key
 url += "&" + EBAY_KEY;
 
-
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(expressSanitizer());
 
 app.use((req, res, next) => {
   //res.header("Access-Control-Allow-Origin", "http://value-streak.herokuapp.com");
@@ -59,9 +61,9 @@ app.post('/search', (req, res) => {
   var oldestAvg = "";
   var lastAvg = "";
   if (req.body.hasOwnProperty('keywords')) {
-    var key = validator.escape(req.body.keywords);
+    var key = req.sanitize(req.body.keywords);
     url += "&keywords=" + key;
-    http.get(url, (httpRes) => {
+    http.get(encodeURI(url), (httpRes) => {
       httpRes.on('data', function(d){
         eBayData += d;
       });
@@ -135,6 +137,31 @@ app.post('/search', (req, res) => {
     res.send({"error" : "Something is wrong with the data"});
 });
 
+
+app.post('/vault', (req, res) => {
+  if (req.body.hasOwnProperty('user')) {
+    db.collection('vault', (err, coll) => {
+      coll.find({'user': req.body.user}).toArray((err, result) => {
+          res.send({result});
+      });
+      
+    });
+  } else {
+    res.send({"error" : "The vault is not open today."});
+  }
+});
+
+app.post('/enVault', (req, res) => {
+  if ((req.body.hasOwnProperty('game')) && (req.body.hasOwnProperty('user')) && (req.body.hasOwnProperty('price'))) {
+    res.send({"success" : "Game enVaulted"});
+    db.collection('vault', (err, coll) => {
+      coll.insertOne({'user': req.body.user, 'game': req.body.game, 'price': req.body.price}); 
+    });
+  }
+  res.send({"error" : "The vault is not open today."})
+});
+
+
 app.use((req, res, next) => {
     if(req.header('x-forwarded-proto') !== 'https') {
         res.redirect(`https://${req.header('host')}${req.url}`);
@@ -142,6 +169,6 @@ app.use((req, res, next) => {
         next();
     }
 });
-app.use(express.static("public"));
 
+app.use(express.static("public"));
 app.listen(PORT, (err)=> console.log("Listening on port " + PORT));
