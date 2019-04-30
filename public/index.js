@@ -133,7 +133,7 @@ function process(items) {
         var maxPriceDate = new Date(items.maxPriceDate);
         style.setAttribute('href', 'result.css');
         if (getCookie("username") != "") {
-            addToVault.innerHTML += '<div id="envaultButton"><button>Click here</button>';
+            addToVault.innerHTML += '><button>Click here</button>';
             addToVault.innerHTML += '<h4>to add game to Vault.</h4>';
         }
         results.innerHTML = '<h3>eBay sales for ' + gameName + ':</h3>';
