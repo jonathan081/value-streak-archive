@@ -14,6 +14,7 @@
 <body>
     <ul class="navibar">
         <li class="navibar_item"> <a href="index.html"> Home</a> </li>
+        <li class="navibar_item"> <a href="vault.html"> Vault</a> </li>
         <li class="navibar_item"> <a href="about.html"> About</a> </li>
         <li class="navibar_button"> <button id="signinBtn">Sign in</button></li>
         <li class="navibar_button"> <button id="signoutBtn">Sign out</button></li>
@@ -50,12 +51,12 @@
     </form>
     </div>
 
+    <div id="AddToVault"></div>
     <div id="results"></div>
     <div id="chart_div"></div>
 
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-database.js"></script>
     <script>
         // Initialize Firebase
         var config = {
