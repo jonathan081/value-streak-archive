@@ -35,7 +35,6 @@ url += "&" + EBAY_KEY;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(require('sanitize').middleware);
 app.use(expressSanitizer());
 
 app.use((req, res, next) => {
