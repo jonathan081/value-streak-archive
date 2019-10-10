@@ -1,8 +1,7 @@
-# Comp 20 Spring 2019 Semester Group Project Team 10
+# Value-Streak
+# By Ziyu Song, Zimo Lin, Will Varteresian and Jonathan Vithoontien
 
-### Title
-
-Value Streak
+### Currently deployed on https://value-streak.herokuapp.com
 
 ### Problem
 
